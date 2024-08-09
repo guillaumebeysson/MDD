@@ -4,10 +4,11 @@ package com.openclassrooms.back.services;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-
+@Service
 public class JwtService {
 
     @Value("${jwt.secret}")
