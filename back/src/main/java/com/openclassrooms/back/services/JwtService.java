@@ -20,12 +20,15 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secretKey;
 
+    @Value("${jwt.expiration}")
+    private int expiration; // 1 jour d'expiration
+
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 jour d'expiration
-                .signWith(SignatureAlgorithm.HS256, getSignInKey()) // Utiliser la clé secrète injectée
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(SignatureAlgorithm.HS256, getSignInKey())
                 .compact();
     }
 
