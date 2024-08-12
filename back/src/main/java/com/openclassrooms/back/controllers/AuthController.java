@@ -8,6 +8,7 @@ import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class AuthController {
 
     @Operation(summary = "Register a new user")
     @PostMapping("/register")
-    public TokenResponse register(@RequestBody RegisterRequest registerRequest) {
+    public TokenResponse register(@RequestBody @Valid RegisterRequest registerRequest) {
         return new TokenResponse(authService.registerUser(registerRequest));
     }
 
