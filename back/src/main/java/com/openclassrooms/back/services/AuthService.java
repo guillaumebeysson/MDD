@@ -2,8 +2,12 @@ package com.openclassrooms.back.services;
 
 import com.openclassrooms.back.dto.AuthRequest;
 import com.openclassrooms.back.dto.RegisterRequest;
+import com.openclassrooms.back.dto.UpdateUserRequest;
+import com.openclassrooms.back.dto.UserResponse;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,6 +18,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class AuthService {
@@ -76,5 +82,25 @@ public class AuthService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return userRepository.findByEmail(email);
+    }
+
+    public User updateUser(UpdateUserRequest updateUserRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User currentUser = userRepository.findByEmail(email);
+
+        if (currentUser == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        currentUser.setName(updateUserRequest.getName());
+        currentUser.setEmail(updateUserRequest.getEmail());
+
+        if (updateUserRequest.getPassword() != null && !updateUserRequest.getPassword().isEmpty()) {
+            currentUser.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));
+        }
+
+        userRepository.save(currentUser);
+        return currentUser;
     }
 }

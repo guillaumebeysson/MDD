@@ -1,9 +1,6 @@
 package com.openclassrooms.back.controllers;
 
-import com.openclassrooms.back.dto.AuthRequest;
-import com.openclassrooms.back.dto.RegisterRequest;
-import com.openclassrooms.back.dto.TokenResponse;
-import com.openclassrooms.back.dto.UserResponse;
+import com.openclassrooms.back.dto.*;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,5 +34,12 @@ public class AuthController {
     public UserResponse getCurrentUser() {
         User user = authService.getCurrentUser();
         return new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
+    }
+
+    @Operation(summary = "Update the current authenticated user's information")
+    @PutMapping("/me")
+    public UserResponse updateCurrentUser(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
+        User updatedUser = authService.updateUser(updateUserRequest);
+        return new UserResponse(updatedUser.getId(), updatedUser.getEmail(), updatedUser.getName(), updatedUser.getCreatedAt(), updatedUser.getUpdatedAt());
     }
 }
