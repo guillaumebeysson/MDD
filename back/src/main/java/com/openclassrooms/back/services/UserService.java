@@ -24,6 +24,10 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public User getUserById(Long id) {
+        return userRepository.findById(id).get();
+    }
+
     public User updateUser(UpdateUserRequest updateUserRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
