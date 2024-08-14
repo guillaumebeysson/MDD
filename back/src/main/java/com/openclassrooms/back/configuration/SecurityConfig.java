@@ -57,16 +57,29 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Configuration de l'encodeur de mot de passe
+     * @return L'encodeur de mot de passe
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configuration de l'authentification
+     * @return L'authentification
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username);
     }
 
+    /**
+     * Configuration du fournisseur d'authentification
+     * @param userDetailsService Le service de détails de l'utilisateur
+     * @return Le fournisseur d'authentification
+     */
     @Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -75,6 +88,11 @@ public class SecurityConfig {
         return provider;
     }
 
+    /**
+     * Configuration du gestionnaire d'authentification
+     * @param authenticationConfiguration La configuration de l'authentification
+     * @return Le gestionnaire d'authentification
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

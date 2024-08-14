@@ -22,26 +22,49 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    /**
+     * Récupère tous les posts
+     * @return liste des posts
+     */
     @GetMapping
     public List<PostResponse> getAllPosts() {
         return postService.getAllPosts().stream().map(PostResponse::new).collect(Collectors.toList());
     }
 
+    /**
+     * Récupère un post par son identifiant
+     * @param id identifiant du post
+     * @return post
+     */
     @GetMapping("/{id}")
     public PostResponse getPostById(@PathVariable Long id) {
         return new PostResponse(postService.getPostById(id));
     }
 
+    /**
+     * Récupère les posts d'un topic
+     * @param topicId identifiant du topic
+     * @return liste des posts du topic
+     */
     @GetMapping("/topic/{topicId}")
     public List<PostResponse> getPostsByTopicId(@PathVariable Long topicId) {
         return postService.getPostsByTopicId(topicId).stream().map(PostResponse::new).collect(Collectors.toList());
     }
 
+    /**
+     * Crée un post
+     * @param postRequest requête de création de post
+     * @return post créé
+     */
     @PostMapping
     public PostResponse createPost(@RequestBody PostRequest postRequest) {
         return new PostResponse(postService.createPost(postRequest));
     }
 
+    /**
+     * Supprime un post
+     * @param id identifiant du post
+     */
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable Long id) {
         postService.deletePost(id);

@@ -18,16 +18,30 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Récupère l'utilisateur actuellement connecté
+     * @return l'utilisateur actuellement connecté
+     */
     public User getCurrentUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * Récupère un utilisateur par son id
+     * @param id l'id de l'utilisateur
+     * @return l'utilisateur
+     */
     public User getUserById(Long id) {
         return userRepository.findById(id).get();
     }
 
+    /**
+     * Met à jour un utilisateur
+     * @param updateUserRequest la requête de mise à jour
+     * @return l'utilisateur mis à jour
+     */
     public User updateUser(UpdateUserRequest updateUserRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();

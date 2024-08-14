@@ -18,6 +18,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Récupère l'utilisateur actuellement authentifié
+     * @return utilisateur actuel
+     */
     @Operation(summary = "Get the current authenticated user")
     @GetMapping("/me")
     public UserResponse getCurrentUser() {
@@ -25,6 +29,11 @@ public class UserController {
         return new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
     }
 
+    /**
+     * Met à jour les informations de l'utilisateur actuellement authentifié
+     * @param updateUserRequest requête de mise à jour de l'utilisateur
+     * @return utilisateur mis à jour
+     */
     @Operation(summary = "Update the current authenticated user's information")
     @PutMapping("/me")
     public UserResponse updateCurrentUser(@RequestBody @Valid UpdateUserRequest updateUserRequest) {

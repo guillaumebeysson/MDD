@@ -17,12 +17,22 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    /**
+     * Authentifie un utilisateur et retourne un token JWT
+     * @param authRequest requête d'authentification
+     * @return token JWT
+     */
     @Operation(summary = "Authenticate a user and return a JWT token")
     @PostMapping("/login")
     public TokenResponse login(@RequestBody AuthRequest authRequest) {
         return new TokenResponse(authService.authenticateUser(authRequest));
     }
 
+    /**
+     * Enregistre un nouvel utilisateur
+     * @param registerRequest requête d'enregistrement
+     * @return token JWT
+     */
     @Operation(summary = "Register a new user")
     @PostMapping("/register")
     public TokenResponse register(@RequestBody @Valid RegisterRequest registerRequest) {

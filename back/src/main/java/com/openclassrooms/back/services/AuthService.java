@@ -39,6 +39,11 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Authentifie un utilisateur et retourne un token JWT
+     * @param authRequest requête d'authentification
+     * @return token JWT
+     */
     public String authenticateUser(AuthRequest authRequest) {
 
         // Détermine si l'entrée est un email ou un nom d'utilisateur
@@ -60,6 +65,11 @@ public class AuthService {
             return jwtService.generateToken(userDetails.getUsername());
     }
 
+    /**
+     * Enregistre un nouvel utilisateur
+     * @param registerRequest requête d'enregistrement
+     * @return token JWT
+     */
     public String registerUser(RegisterRequest registerRequest) {
 
         if (registerRequest.getPassword() == null || registerRequest.getEmail() == null || registerRequest.getName() == null) {

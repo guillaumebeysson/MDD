@@ -18,21 +18,40 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    /**
+     * Récupère un commentaire par son identifiant
+     * @param id identifiant du commentaire
+     * @return commentaire
+     */
     @GetMapping("/{id}")
     public CommentResponse getCommentById(@PathVariable Long id) {
         return new CommentResponse(commentService.getCommentById(id));
     }
 
+    /**
+     * Récupère les commentaires d'un post
+     * @param postId identifiant du post
+     * @return liste des commentaires
+     */
     @GetMapping("/post/{postId}")
     public List<CommentResponse> getCommentsByPostId(@PathVariable Long postId) {
         return commentService.getCommentsByPostId(postId).stream().map(CommentResponse::new).collect(Collectors.toList());
     }
 
+    /**
+     * Crée un commentaire
+     * @param commentRequest requête de création de commentaire
+     * @return commentaire créé
+     */
     @PostMapping
     public CommentResponse createComment(@RequestBody CommentRequest commentRequest) {
         return new CommentResponse(commentService.createComment(commentRequest));
     }
 
+    /**
+     * Supprime un commentaire
+     * @param id identifiant du commentaire
+     */
     @DeleteMapping("/{id}")
     public void deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);

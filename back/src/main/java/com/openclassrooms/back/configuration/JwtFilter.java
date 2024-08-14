@@ -25,6 +25,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    /***
+     * Filtre qui vérifie la présence d'un token JWT dans le header de la requête.
+     * Si le token est valide, l'utilisateur est authentifié.
+     * @param request La requête
+     * @param response La réponse
+     * @param filterChain La chaîne de filtres
+     */
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,

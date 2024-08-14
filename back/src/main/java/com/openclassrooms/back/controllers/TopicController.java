@@ -21,14 +21,20 @@ public class TopicController {
     @Autowired
     private TopicService topicService;
 
-    @Autowired
-    private UserService userService;
-
+    /**
+     * Récupère un topic par son identifiant
+     * @param id identifiant du topic
+     * @return topic
+     */
     @GetMapping("/{id}")
     public TopicResponse getTopicById(@PathVariable Long id) {
         return new TopicResponse(topicService.getTopicById(id));
     }
 
+    /**
+     * Récupère tous les topics
+     * @return liste des topics
+     */
     @GetMapping
     public List<TopicResponse> getAllTopics() {
         return topicService.getAllTopics().stream().map(TopicResponse::new).collect(Collectors.toList());

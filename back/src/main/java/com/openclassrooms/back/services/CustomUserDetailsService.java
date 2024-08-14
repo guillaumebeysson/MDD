@@ -16,6 +16,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Charge un utilisateur à partir de son email.
+     * @param email l'email de l'utilisateur
+     * @return les détails de l'utilisateur
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -29,6 +34,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         );
     }
 
+    /**
+     * Charge un utilisateur à partir de son email ou de son nom d'utilisateur.
+     * @param usernameOrName l'email ou le nom d'utilisateur de l'utilisateur
+     * @return les détails de l'utilisateur
+     */
     public UserDetails loadUserByUsernameOrName(String usernameOrName) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(usernameOrName);
         if (user == null) {
