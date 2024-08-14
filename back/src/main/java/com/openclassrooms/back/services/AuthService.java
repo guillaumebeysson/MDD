@@ -78,29 +78,4 @@ public class AuthService {
         return authenticateUser(authRequest);
     }
 
-    public User getCurrentUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        return userRepository.findByEmail(email);
-    }
-
-    public User updateUser(UpdateUserRequest updateUserRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        User currentUser = userRepository.findByEmail(email);
-
-        if (currentUser == null) {
-            throw new IllegalArgumentException("User not found");
-        }
-
-        currentUser.setName(updateUserRequest.getName());
-        currentUser.setEmail(updateUserRequest.getEmail());
-
-        if (updateUserRequest.getPassword() != null && !updateUserRequest.getPassword().isEmpty()) {
-            currentUser.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));
-        }
-
-        userRepository.save(currentUser);
-        return currentUser;
-    }
 }
