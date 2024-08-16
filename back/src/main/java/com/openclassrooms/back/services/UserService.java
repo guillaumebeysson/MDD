@@ -69,4 +69,8 @@ public class UserService {
         userRepository.save(currentUser);
         return currentUser;
     }
+
+    public boolean existsById(Long userId) {
+        return userRepository.existsById(userId);
+    }
 }

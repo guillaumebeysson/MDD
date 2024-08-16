@@ -2,11 +2,7 @@ package com.openclassrooms.back.controllers;
 
 import com.openclassrooms.back.dto.PostRequest;
 import com.openclassrooms.back.dto.PostResponse;
-import com.openclassrooms.back.models.Post;
-import com.openclassrooms.back.repositories.PostRepository;
 import com.openclassrooms.back.services.PostService;
-import com.openclassrooms.back.services.TopicService;
-import com.openclassrooms.back.services.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -69,5 +65,7 @@ public class PostController {
     public void deletePost(@PathVariable Long id) {
         postService.deletePost(id);
     }
+
+
 
 }

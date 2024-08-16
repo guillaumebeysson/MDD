@@ -1,10 +1,14 @@
 package com.openclassrooms.back.services;
 
 import com.openclassrooms.back.dto.PostRequest;
+import com.openclassrooms.back.exceptions.PostBadRequestException;
+import com.openclassrooms.back.exceptions.PostNotFoundException;
 import com.openclassrooms.back.models.Post;
 import com.openclassrooms.back.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -34,8 +38,10 @@ public class PostService {
      * @return le post
      */
     public Post getPostById(Long id) {
-        return postRepository.findById(id).get();
+        return postRepository.findById(id)
+                .orElseThrow(() -> new PostNotFoundException("Post with id " + id + " not found"));
     }
+
 
     /**
      * Récupère tous les posts d'un topic
@@ -43,7 +49,18 @@ public class PostService {
      * @return la liste des posts
      */
     public List<Post> getPostsByTopicId(Long topicId) {
-        return postRepository.findByTopicId(topicId);
+        if (!topicService.existsById(topicId)) {
+            throw new PostNotFoundException("Posts with Topic id " + topicId + " not found");
+        }
+
+        List<Post> posts = postRepository.findByTopicId(topicId);
+
+        // Si aucun post n'est trouvé pour un topic existant
+        if (posts.isEmpty()) {
+            throw new PostNotFoundException("No posts found for topic with id " + topicId);
+        }
+
+        return posts;
     }
 
     /**
@@ -52,13 +69,30 @@ public class PostService {
      * @return le post créé
      */
     public Post createPost(PostRequest postRequest) {
+        // Vérification des champs obligatoires
+        if (postRequest.getTitle().isEmpty() || postRequest.getContent().isEmpty()) {
+            throw new PostBadRequestException("Title and content must not be null");
+        }
+
+        if (!userService.existsById(postRequest.getUserId())) {
+            throw new PostNotFoundException("User with id " + postRequest.getUserId() + " not found");
+        }
+
+        if (!topicService.existsById(postRequest.getTopicId())) {
+            throw new PostNotFoundException("Topic with id " + postRequest.getTopicId() + " not found");
+        }
+
+        // Création du post
         Post post = new Post();
         post.setTitle(postRequest.getTitle());
         post.setContent(postRequest.getContent());
         post.setUser(userService.getUserById(postRequest.getUserId()));
         post.setTopic(topicService.getTopicById(postRequest.getTopicId()));
+
         return postRepository.save(post);
     }
+
+
 
     /**
      * Met à jour un post
@@ -66,6 +100,9 @@ public class PostService {
      * @return le post mis à jour
      */
     public Post updatePost(Post post) {
+        if (!postRepository.existsById(post.getId())) {
+            throw new PostNotFoundException("Post with id " + post.getId() + " not found");
+        }
         return postRepository.save(post);
     }
 
@@ -74,6 +111,9 @@ public class PostService {
      * @param id l'id du post
      */
     public void deletePost(Long id) {
+        if (!postRepository.existsById(id)) {
+            throw new PostNotFoundException("Post with id " + id + " not found");
+        }
         postRepository.deleteById(id);
     }
 }

@@ -28,6 +28,12 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
+
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler;
+
     /**
      * Liste des URI autorisées sans authentification
      */
@@ -49,7 +55,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // Désactiver la protection CSRF pour les API REST
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTHORIZED_URI).permitAll() // Autoriser les URI spécifiques sans authentification
-                        .anyRequest().authenticated() // Exiger l'authentification pour toutes les autres requêtes
+                        .anyRequest().authenticated()) // Exiger l'authentification pour toutes les autres requêtes
+                 .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(authenticationEntryPoint) // Gérer les erreurs 401
+                        .accessDeniedHandler(accessDeniedHandler) // Gérer les erreurs 403
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

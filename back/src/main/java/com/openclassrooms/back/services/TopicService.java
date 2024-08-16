@@ -29,4 +29,8 @@ public class TopicService {
     public Topic getTopicById(Long id) {
         return topicRepository.findById(id).get();
     }
+
+    public boolean existsById(Long topicId) {
+        return topicRepository.existsById(topicId);
+    }
 }

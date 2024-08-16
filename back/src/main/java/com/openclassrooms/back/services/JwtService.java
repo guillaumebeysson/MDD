@@ -1,9 +1,7 @@
 package com.openclassrooms.back.services;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,12 +62,24 @@ public class JwtService {
      * @return les revendications
      */
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts
+                    .parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            throw new JwtException("Token has expired", e);
+        } catch (UnsupportedJwtException e) {
+            throw new JwtException("Token format is not supported", e);
+        } catch (MalformedJwtException e) {
+            throw new JwtException("Token is malformed", e);
+        } catch (IllegalArgumentException e) {
+            throw new JwtException("Token is null or empty", e);
+        } catch (io.jsonwebtoken.security.SecurityException e) {
+            throw new JwtException("Invalid token signature", e);
+        }
     }
 
     /**
