@@ -1,6 +1,7 @@
 package com.openclassrooms.back.services;
 
 import com.openclassrooms.back.dto.UpdateUserRequest;
+import com.openclassrooms.back.exceptions.NotFoundException;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,8 @@ public class UserService {
      * @return l'utilisateur
      */
     public User getUserById(Long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User with id " + id + " not found"));
     }
 
     /**
@@ -48,7 +50,7 @@ public class UserService {
         User currentUser = userRepository.findByEmail(email);
 
         if (currentUser == null) {
-            throw new IllegalArgumentException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         // Mise à jour du nom si fourni, sinon garder le nom actuel
