@@ -114,4 +114,8 @@ public class PostService {
         }
         postRepository.deleteById(id);
     }
+
+    public boolean existsById(Long postId) {
+        return postRepository.existsById(postId);
+    }
 }
