@@ -55,7 +55,7 @@ public class AuthService {
             userDetails = customUserDetailsService.loadUserByUsername(emailOrUsername);  // Charger par email
         } else {
             // Sinon, on suppose que c'est un nom d'utilisateur
-            userDetails = customUserDetailsService.loadUserByUsernameOrName(emailOrUsername);  // Charger par nom d'utilisateur
+            userDetails = customUserDetailsService.loadUserByEmailOrName(emailOrUsername);  // Charger par nom d'utilisateur
         }
 
         // Authentification réussie
