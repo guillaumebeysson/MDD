@@ -54,10 +54,10 @@ public class AuthService {
         try {
             if (emailOrUsername.contains("@")) {
                 // Si l'entrée contient un '@', on suppose que c'est un email
-                userDetails = customUserDetailsService.loadUserByUsername(emailOrUsername);  // Charger par email
+                userDetails = customUserDetailsService.loadUserByUsername(emailOrUsername);
             } else {
                 // Sinon, on suppose que c'est un nom d'utilisateur
-                userDetails = customUserDetailsService.loadUserByEmailOrName(emailOrUsername);  // Charger par nom d'utilisateur
+                userDetails = customUserDetailsService.loadUserByEmailOrName(emailOrUsername);
             }
         } catch (Exception e) {
             throw new UnauthorizedException("Invalid credentials provided");
@@ -68,10 +68,14 @@ public class AuthService {
         }
 
 
-        // Authentification réussie
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(userDetails.getUsername(), authRequest.getPassword())
-        );
+        try {
+            // Authentification réussie
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userDetails.getUsername(), authRequest.getPassword())
+            );
+        } catch (Exception e) {
+            throw new UnauthorizedException("Invalid credentials provided");
+        }
             return jwtService.generateToken(userDetails.getUsername());
     }
 
@@ -82,10 +86,24 @@ public class AuthService {
      */
     public String registerUser(RegisterRequest registerRequest) {
 
-        if (registerRequest.getPassword() == null || registerRequest.getPassword().isEmpty() ||
-                registerRequest.getEmail() == null || registerRequest.getEmail().isEmpty() ||
-                registerRequest.getName() == null) {
+        if (registerRequest.getEmail() == null || registerRequest.getEmail().isEmpty()){
+            throw new BadRequestException("Email must not be null or empty");
+        }
+
+        if (registerRequest.getName() == null || registerRequest.getName().isEmpty()){
+            throw new BadRequestException("Name must not be null or empty");
+        }
+
+        if (registerRequest.getPassword() == null || registerRequest.getPassword().isEmpty()){
+            throw new BadRequestException("Password must not be null or empty");
+        }
+
+        if (userRepository.findByEmail(registerRequest.getEmail()) != null) {
             throw new ConflictException("User with email " + registerRequest.getEmail() + " already exists");
+        }
+
+        if (userRepository.findByName(registerRequest.getName()) != null) {
+            throw new ConflictException("User with name " + registerRequest.getName() + " already exists");
         }
 
         User user = new User();

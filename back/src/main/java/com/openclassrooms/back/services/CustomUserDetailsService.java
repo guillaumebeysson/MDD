@@ -1,6 +1,7 @@
 package com.openclassrooms.back.services;
 
 import com.openclassrooms.back.exceptions.NotFoundException;
+import com.openclassrooms.back.exceptions.UnauthorizedException;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,22 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new NotFoundException("User with emeil " + email + " not found");
+        try {
+            User user = userRepository.findByEmail(email);
+            if (user == null) {
+                throw new NotFoundException("User with email " + email + " not found");
+            }
+            return new org.springframework.security.core.userdetails.User(
+                    user.getEmail(),
+                    user.getPassword(),
+                    Collections.emptyList() // Pas de rôles pour l'instant
+            );
         }
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                Collections.emptyList() // Pas de rôles pour l'instant
-        );
+        catch (Exception e) {
+            throw new UnauthorizedException("Invalid credentials provided");
+        }
+
+
     }
 
     /**
