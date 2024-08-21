@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+    <img src="/logo-mdd.png" alt="Logo" class="logo">
+    <span class="spacer"></span>
+    <button mat-icon-button matMenuTrigger [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <nav class="desktop-menu">
+        <a mat-button routerLink="/articles">Articles</a>
+        <a mat-button routerLink="/themes">Thèmes</a>
+        <a mat-button routerLink="/user">Compte</a>
+    </nav>
+</mat-toolbar>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/articles">Articles</button>
+    <button mat-menu-item routerLink="/themes">Thèmes</button>
+    <button mat-menu-item routerLink="/user">Compte</button>
+</mat-menu>

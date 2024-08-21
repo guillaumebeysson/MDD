@@ -1,0 +1,22 @@
+.logo {
+    height: 50px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.desktop-menu {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .desktop-menu {
+        display: flex;
+        gap: 10px;
+    }
+
+    button[mat-icon-button] {
+        display: none;
+    }
+}
