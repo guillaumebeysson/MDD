@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/comments")
 @Tag(name = "Comments", description = "Endpoints for managing comments")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CommentController {
 
     @Autowired

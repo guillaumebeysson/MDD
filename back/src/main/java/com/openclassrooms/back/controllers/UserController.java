@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/user")
 @Tag(name = "User", description = "Endpoints for user management")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired
@@ -23,7 +24,7 @@ public class UserController {
      * @return utilisateur actuel
      */
     @Operation(summary = "Get the current authenticated user")
-    @GetMapping("/me")
+    @GetMapping()
     public UserResponse getCurrentUser() {
         User user = userService.getCurrentUser();
         return new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
@@ -35,7 +36,7 @@ public class UserController {
      * @return utilisateur mis à jour
      */
     @Operation(summary = "Update the current authenticated user's information")
-    @PutMapping("/me")
+    @PutMapping()
     public UserResponse updateCurrentUser(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
         User updatedUser = userService.updateUser(updateUserRequest);
         return new UserResponse(updatedUser.getId(), updatedUser.getEmail(), updatedUser.getName(), updatedUser.getCreatedAt(), updatedUser.getUpdatedAt());

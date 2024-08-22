@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/posts")
 @Tag(name = "Posts", description = "Endpoints for managing posts")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PostController {
 
     @Autowired

@@ -1,6 +1,7 @@
 package com.openclassrooms.back.services;
 
 import com.openclassrooms.back.dto.UpdateUserRequest;
+import com.openclassrooms.back.exceptions.ConflictException;
 import com.openclassrooms.back.exceptions.NotFoundException;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.UserRepository;
@@ -55,11 +56,18 @@ public class UserService {
 
         // Mise à jour du nom si fourni, sinon garder le nom actuel
         if (updateUserRequest.getName() != null && !updateUserRequest.getName().isEmpty()) {
-            currentUser.setName(updateUserRequest.getName());
+            User userWithSameName = userRepository.findByName(updateUserRequest.getName());
+            if (userWithSameName != null && !userWithSameName.getId().equals(currentUser.getId())) {
+                throw new ConflictException("Name " + updateUserRequest.getName() + " is already used");
+            }
         }
 
-        // Mise à jour de l'email si fourni, sinon garder l'email actuel
+        // Vérification si l'email est déjà utilisé par un autre utilisateur
         if (updateUserRequest.getEmail() != null && !updateUserRequest.getEmail().isEmpty()) {
+            User userWithSameEmail = userRepository.findByEmail(updateUserRequest.getEmail());
+            if (userWithSameEmail != null && !userWithSameEmail.getId().equals(currentUser.getId())) {
+                throw new ConflictException("Email " + updateUserRequest.getEmail() + " is already used");
+            }
             currentUser.setEmail(updateUserRequest.getEmail());
         }
 
