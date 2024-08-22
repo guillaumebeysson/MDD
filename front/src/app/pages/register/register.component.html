@@ -1,1 +1,20 @@
-<p>register works!</p>
+<app-back-button></app-back-button>
+<div id="logo-mdd">
+    <img src="/logo-mdd.png" alt="">
+</div>
+<h2>S'inscrire</h2>
+<form class="login-form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+        <mat-label>Nom d'utilisateur</mat-label>
+        <input matInput [(ngModel)]="username" name="username" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Adresse email</mat-label>
+        <input matInput [(ngModel)]="email" name="email" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput [(ngModel)]="password" name="password" type="password" required />
+    </mat-form-field>
+    <button mat-raised-button type="submit">S'inscrire</button>
+</form>

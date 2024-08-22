@@ -9,5 +9,34 @@ body {
     margin: 0;
     font-family: Roboto,
         "Helvetica Neue", sans-serif;
-    background-color: #1e1a1d;
+    /* background-color: #1e1a1d; */
+}
+
+button {
+    color: #ffffff !important;
+    background-color: #7550EC !important;
+}
+
+.green-snackbar {
+    background: rgb(65, 252, 134);
+    color: white;
+}
+
+.green-snackbar button {
+    background-color: rgb(65, 252, 134);
+    color: white;
+    border: none;
+}
+
+.snackbar-error {
+    background: #F44336 !important;
+    color: white !important;
+    border: solid 3px #F44336 !important;
+    border-radius: 5px !important;
+}
+
+.snackbar-error button {
+    background-color: #F44336 !important;
+    color: white !important;
+    border: none !important;
 }

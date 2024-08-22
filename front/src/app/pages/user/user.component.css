@@ -1,8 +1,9 @@
-h2 {
+h3 {
     text-align: center;
+    margin-top: 30px;
 }
 
-.login-form {
+.update-form {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -16,18 +17,13 @@ input {
     width: 300px;
 }
 
-img {
-    width: 100%;
-    display: none;
+.disconnected {
+    color: red !important;
+    background: none !important;
 }
 
-
 @media (max-width: 768px) {
-    .login-form {
+    .update-form {
         width: 90%;
-    }
-
-    img {
-        display: block;
     }
 }

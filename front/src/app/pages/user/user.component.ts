@@ -7,10 +7,9 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { BackButtonComponent } from "../../back-button/back-button.component";
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-user',
   standalone: true,
   imports: [MatCard,
     MatCardTitle,
@@ -23,26 +22,19 @@ import { Router } from '@angular/router';
     MatIcon,
     ReactiveFormsModule,
     BackButtonComponent],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  templateUrl: './user.component.html',
+  styleUrl: './user.component.css'
 })
-export class RegisterComponent {
+export class UserComponent {
 
   username: string = '';
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService) { }
 
-  onSubmit(): void {
-    this.authService.register(this.username, this.email, this.password).subscribe(
-      (data) => {
-        this.router.navigate(['/articles']);
-      },
-      (error) => {
-        console.error('Registration failed', error);
-      }
-    );
+  logout(): void {
+    this.authService.logout();
   }
 
 }

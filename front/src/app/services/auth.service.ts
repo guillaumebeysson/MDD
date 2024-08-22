@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class AuthService {
   private tokenSubject: BehaviorSubject<string | null>;
   public token: Observable<string | null>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.tokenSubject = new BehaviorSubject<string | null>(localStorage.getItem('token'));
     this.token = this.tokenSubject.asObservable();
   }
@@ -34,6 +35,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     this.tokenSubject.next(null);
+    this.router.navigate(['/']);
   }
 
   register(email: string, name: string, password: string): Observable<any> {

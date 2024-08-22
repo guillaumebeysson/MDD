@@ -1,1 +1,16 @@
-<p>login works!</p>
+<app-back-button></app-back-button>
+<div id="logo-mdd">
+    <img src="/logo-mdd.png" alt="">
+</div>
+<h2>Se connecter</h2>
+<form class="login-form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+        <mat-label>Email ou nom d'utilisateur</mat-label>
+        <input matInput [(ngModel)]="emailOrUsername" name="emailOrUsername" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput [(ngModel)]="password" name="password" type="password" required />
+    </mat-form-field>
+    <button mat-raised-button type="submit">Se connecter</button>
+</form>

@@ -1,18 +1,22 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
     <img src="/logo-mdd.png" alt="Logo" class="logo">
     <span class="spacer"></span>
     <button mat-icon-button matMenuTrigger [matMenuTriggerFor]="menu">
         <mat-icon>menu</mat-icon>
     </button>
     <nav class="desktop-menu">
+        @if (authService.isAuthenticated()) {
         <a mat-button routerLink="/articles">Articles</a>
         <a mat-button routerLink="/themes">Thèmes</a>
-        <a mat-button routerLink="/user">Compte</a>
+        <a mat-icon-button routerLink="/user"><mat-icon>account_circle</mat-icon></a>
+        }
     </nav>
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
+    @if (authService.isAuthenticated()) {
     <button mat-menu-item routerLink="/articles">Articles</button>
     <button mat-menu-item routerLink="/themes">Thèmes</button>
-    <button mat-menu-item routerLink="/user">Compte</button>
+    <button mat-menu-item routerLink="/user"><mat-icon>account_circle</mat-icon></button>
+    }
 </mat-menu>

@@ -6,6 +6,10 @@
     flex-direction: column;
 }
 
+img {
+    width: 100%;
+}
+
 .btn-container {
     display: flex;
     justify-content: center;
@@ -14,4 +18,11 @@
 
 button {
     margin: 10px;
+    width: 150px;
+}
+
+@media (max-width: 768px) {
+    .btn-container {
+        flex-direction: column;
+    }
 }
