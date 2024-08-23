@@ -4,6 +4,7 @@ import com.openclassrooms.back.dto.CommentRequest;
 import com.openclassrooms.back.dto.CommentResponse;
 import com.openclassrooms.back.services.CommentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +46,7 @@ public class CommentController {
      * @return commentaire créé
      */
     @PostMapping
-    public CommentResponse createComment(@RequestBody CommentRequest commentRequest) {
+    public CommentResponse createComment(@RequestBody @Valid CommentRequest commentRequest) {
         return new CommentResponse(commentService.createComment(commentRequest));
     }
 

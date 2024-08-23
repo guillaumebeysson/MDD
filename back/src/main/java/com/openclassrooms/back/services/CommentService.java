@@ -4,8 +4,10 @@ import com.openclassrooms.back.dto.CommentRequest;
 import com.openclassrooms.back.exceptions.NotFoundException;
 import com.openclassrooms.back.models.Comment;
 import com.openclassrooms.back.repositories.CommentRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -49,9 +51,7 @@ public class CommentService {
      * @return le commentaire créé
      */
     public Comment createComment(CommentRequest commentRequest) {
-        if (commentRequest.getContent() == null || commentRequest.getContent().isEmpty()) {
-            throw new NotFoundException("Content must not be null or empty");
-        }
+        Assert.hasLength(commentRequest.getContent(), "Content must not be null or empty");
 
         if (!userService.existsById(commentRequest.getUserId())) {
             throw new NotFoundException("User with id " + commentRequest.getUserId() + " not found");
