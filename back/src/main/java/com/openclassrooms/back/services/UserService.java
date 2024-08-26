@@ -3,7 +3,9 @@ package com.openclassrooms.back.services;
 import com.openclassrooms.back.dto.UpdateUserRequest;
 import com.openclassrooms.back.exceptions.ConflictException;
 import com.openclassrooms.back.exceptions.NotFoundException;
+import com.openclassrooms.back.models.Topic;
 import com.openclassrooms.back.models.User;
+import com.openclassrooms.back.repositories.TopicRepository;
 import com.openclassrooms.back.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,6 +21,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private TopicRepository topicRepository;
 
     /**
      * Récupère l'utilisateur actuellement connecté
@@ -78,6 +83,46 @@ public class UserService {
 
         userRepository.save(currentUser);
         return currentUser;
+    }
+
+    /**
+     * Abonne l'utilisateur au topic donné
+     * @param userId l'id de l'utilisateur
+     * @param topicId l'id du topic
+     */
+    public void subscribeToTopic(Long userId, Long topicId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
+
+        Topic topic = topicRepository.findById(topicId)
+                .orElseThrow(() -> new NotFoundException("Topic with id " + topicId + " not found"));
+
+        if (user.getTopics().contains(topic)) {
+            throw new ConflictException("User is already subscribed to this topic");
+        }
+
+        user.getTopics().add(topic);
+        userRepository.save(user);
+    }
+
+    /**
+     * Désabonne l'utilisateur du topic donné
+     * @param userId l'id de l'utilisateur
+     * @param topicId l'id du topic
+     */
+    public void unsubscribeFromTopic(Long userId, Long topicId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
+
+        Topic topic = topicRepository.findById(topicId)
+                .orElseThrow(() -> new NotFoundException("Topic with id " + topicId + " not found"));
+
+        if (!user.getTopics().contains(topic)) {
+            throw new NotFoundException("User is not subscribed to this topic");
+        }
+
+        user.getTopics().remove(topic);
+        userRepository.save(user);
     }
 
     public boolean existsById(Long userId) {

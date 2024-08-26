@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,4 +42,27 @@ public class UserController {
         User updatedUser = userService.updateUser(updateUserRequest);
         return new UserResponse(updatedUser.getId(), updatedUser.getEmail(), updatedUser.getName(), updatedUser.getCreatedAt(), updatedUser.getUpdatedAt());
     }
+
+    /**
+     * Abonne l'utilisateur actuel à un topic
+     * @param topicId l'id du topic
+     */
+    @PostMapping("/subscribe/{topicId}")
+    public ResponseEntity<String> subscribeToTopic(@PathVariable Long topicId) {
+        User currentUser = userService.getCurrentUser();
+        userService.subscribeToTopic(currentUser.getId(), topicId);
+        return ResponseEntity.ok("Subscribed to topic with id " + topicId);
+    }
+
+    /**
+     * Désabonne l'utilisateur actuel d'un topic
+     * @param topicId l'id du topic
+     */
+    @DeleteMapping("/unsubscribe/{topicId}")
+    public ResponseEntity<String> unsubscribeFromTopic(@PathVariable Long topicId) {
+        User currentUser = userService.getCurrentUser();
+        userService.unsubscribeFromTopic(currentUser.getId(), topicId);
+        return ResponseEntity.ok("Unsubscribed from topic with id " + topicId);
+    }
+
 }
