@@ -13,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -123,6 +125,17 @@ public class UserService {
 
         user.getTopics().remove(topic);
         userRepository.save(user);
+    }
+
+    /**
+     * Récupère les topics auxquels l'utilisateur est abonné
+     * @param userId l'id de l'utilisateur
+     * @return liste des topics abonnés
+     */
+    public List<Topic> getSubscribedTopics(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
+        return user.getTopics();
     }
 
     public boolean existsById(Long userId) {

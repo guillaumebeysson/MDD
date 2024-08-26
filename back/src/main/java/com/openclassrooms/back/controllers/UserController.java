@@ -1,5 +1,6 @@
 package com.openclassrooms.back.controllers;
 
+import com.openclassrooms.back.dto.TopicResponse;
 import com.openclassrooms.back.dto.UpdateUserRequest;
 import com.openclassrooms.back.dto.UserResponse;
 import com.openclassrooms.back.models.User;
@@ -10,6 +11,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
@@ -48,10 +52,9 @@ public class UserController {
      * @param topicId l'id du topic
      */
     @PostMapping("/subscribe/{topicId}")
-    public ResponseEntity<String> subscribeToTopic(@PathVariable Long topicId) {
+    public void subscribeToTopic(@PathVariable Long topicId) {
         User currentUser = userService.getCurrentUser();
         userService.subscribeToTopic(currentUser.getId(), topicId);
-        return ResponseEntity.ok("Subscribed to topic with id " + topicId);
     }
 
     /**
@@ -59,10 +62,19 @@ public class UserController {
      * @param topicId l'id du topic
      */
     @DeleteMapping("/unsubscribe/{topicId}")
-    public ResponseEntity<String> unsubscribeFromTopic(@PathVariable Long topicId) {
+    public void unsubscribeFromTopic(@PathVariable Long topicId) {
         User currentUser = userService.getCurrentUser();
         userService.unsubscribeFromTopic(currentUser.getId(), topicId);
-        return ResponseEntity.ok("Unsubscribed from topic with id " + topicId);
+    }
+
+    /**
+     * Récupère les topics auxquels l'utilisateur actuel est abonné
+     * @return liste des topics
+     */
+    @GetMapping("/subscriptions")
+    public List<TopicResponse> getSubscribedTopics() {
+        User currentUser = userService.getCurrentUser();
+        return userService.getSubscribedTopics(currentUser.getId()).stream().map(TopicResponse::new).collect(Collectors.toList());
     }
 
 }
