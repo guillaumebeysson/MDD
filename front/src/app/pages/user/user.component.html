@@ -18,3 +18,8 @@
 </form>
 <hr>
 <h3>Abonnements</h3>
+<div class="topic-list">
+    @for (topic of subscribedTopics; track topic.id) {
+    <app-topic-item [topic]="topic" [isSubscribed]="true" (unsubscribed)="removeTopic(topic.id)"></app-topic-item>
+    }
+</div>

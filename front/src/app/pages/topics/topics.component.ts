@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Topic } from '../../interfaces/topic.interface';
 import { TopicService } from '../../services/topic.service';
 import { TopicItemComponent } from "../../topic-item/topic-item.component";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-topics',
@@ -17,15 +18,18 @@ export class TopicsComponent implements OnInit {
 
   topics: Topic[] = [];
 
-  constructor(private topicService: TopicService) { }
+  constructor(private topicService: TopicService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.topicService.getTopics().subscribe({
       next: (data) => {
         this.topics = data;
       },
-      error: (err) => {
-        console.error(err);
+      error: (error) => {
+        this.snackBar.open(error?.message || `Erreur lors de la récupération des topics`, 'X', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
       }
     })
   }

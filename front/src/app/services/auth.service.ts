@@ -22,12 +22,11 @@ export class AuthService {
     return this.tokenSubject.value;
   }
 
-  login(emailOrUsername: string, password: string) {
+  login(emailOrUsername: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}auth/login`, { emailOrUsername, password }).pipe(
       map((response) => {
         if (response.token) {
-          localStorage.setItem('token', response.token);
-          this.tokenSubject.next(response.token);
+          this.setToken(response.token);
         }
         return response;
       })
@@ -35,8 +34,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    this.tokenSubject.next(null);
+    this.clearToken();
     this.router.navigate(['/']);
   }
 
@@ -44,8 +42,7 @@ export class AuthService {
     return this.http.post<any>(`${this.baseUrl}auth/register`, { name, email, password }).pipe(
       map((response) => {
         if (response.token) {
-          localStorage.setItem('token', response.token);
-          this.tokenSubject.next(response.token);
+          this.setToken(response.token);
         }
         return response;
       })
@@ -56,8 +53,13 @@ export class AuthService {
     return !!this.tokenValue;
   }
 
+  private setToken(token: string): void {
+    localStorage.setItem('token', token);
+    this.tokenSubject.next(token);
+  }
 
-
-
-
+  private clearToken(): void {
+    localStorage.removeItem('token');
+    this.tokenSubject.next(null);
+  }
 }

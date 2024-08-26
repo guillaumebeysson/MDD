@@ -4,6 +4,8 @@
         <p>{{ topic.content }}</p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button (click)="onSubscribe()">S'abonner</button>
+        <button mat-raised-button (click)="onSubscribe()">
+            {{ isSubscribed ? 'Se désabonner' : 'S\'abonner' }}
+        </button>
     </mat-card-actions>
 </mat-card>

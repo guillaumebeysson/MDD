@@ -22,6 +22,19 @@ input {
     background: none !important;
 }
 
+.topic-list {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+app-topic-item {
+    width: 100%;
+    max-width: 400px;
+}
+
 @media (max-width: 768px) {
     .update-form {
         width: 90%;
