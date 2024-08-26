@@ -8,6 +8,8 @@ import { MatIcon } from '@angular/material/icon';
 import { BackButtonComponent } from "../../back-button/back-button.component";
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -31,18 +33,26 @@ export class RegisterComponent {
   username: string = '';
   email: string = '';
   password: string = '';
+  subscription!: Subscription;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) { }
 
   onSubmit(): void {
-    this.authService.register(this.username, this.email, this.password).subscribe(
-      (data) => {
+    this.subscription = this.authService.register(this.username, this.email, this.password).subscribe({
+      next: (data) => {
         this.router.navigate(['/articles']);
+        this.snackBar.open('Inscription réussie, vous êtes connecté !', 'X', {
+          duration: 4000,
+          panelClass: ['snackbar-success']
+        });
       },
-      (error) => {
-        console.error('Registration failed', error);
+      error: (error) => {
+        this.snackBar.open(error.error?.message || 'Une erreur s\'est produite. Veuillez réessayer.', 'X', {
+          duration: 4000,
+          panelClass: ['snackbar-error']
+        });
       }
-    );
+    });
   }
 
 }

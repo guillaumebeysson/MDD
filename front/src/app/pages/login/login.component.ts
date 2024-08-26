@@ -9,6 +9,7 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { BackButtonComponent } from "../../back-button/back-button.component";
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -35,16 +36,21 @@ export class LoginComponent {
   emailOrUsername: string = '';
   password: string = '';
   errorMessage: string | null = null;
+  subscription!: Subscription;
 
   constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) { }
 
   onSubmit(): void {
-    this.authService.login(this.emailOrUsername, this.password).subscribe(
+    this.subscription = this.authService.login(this.emailOrUsername, this.password).subscribe(
       (data) => {
         this.router.navigate(['/articles']);
+        this.snackBar.open('Vous êtes connecté !', 'X', {
+          duration: 4000,
+          panelClass: ['snackbar-success']
+        });
       },
       (error) => {
-        this.snackBar.open(error.error?.message || 'Une erreur s\'est produite. Veuillez réessayer.', 'Close', {
+        this.snackBar.open(error.error?.message || 'Une erreur s\'est produite. Veuillez réessayer.', 'X', {
           duration: 4000,
           panelClass: ['snackbar-error']
         })
