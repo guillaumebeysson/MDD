@@ -51,13 +51,13 @@ export class TopicItemComponent {
       } else {
         this.userService.subscribeToTopic(this.topic.id).subscribe({
           next: () => {
-            this.snackBar.open(`Abonné au topic: ${this.topic.title}`, 'X', {
+            this.snackBar.open(`Abonné au thème: ${this.topic.title}`, 'X', {
               duration: 3000,
               panelClass: ['snackbar-success']
             });
           },
-          error: (error) => {
-            this.snackBar.open(error.error?.message || `Erreur lors de l'abonnement au topic: ${this.topic.title}`, 'X', {
+          error: () => {
+            this.snackBar.open(`Vous êtes déjà abonné à ce thème` || `Erreur lors de l'abonnement au topic: ${this.topic.title}`, 'X', {
               duration: 3000,
               panelClass: ['snackbar-error']
             });
