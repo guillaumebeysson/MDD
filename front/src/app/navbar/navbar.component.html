@@ -7,7 +7,7 @@
     </button>
     <nav class="desktop-menu">
         <a mat-button routerLink="/articles">Articles</a>
-        <a mat-button routerLink="/themes">Thèmes</a>
+        <a mat-button routerLink="/topics">Thèmes</a>
         <a mat-icon-button routerLink="/user"><mat-icon>account_circle</mat-icon></a>
     </nav>
     }
@@ -15,8 +15,8 @@
 
 <mat-menu #menu="matMenu">
     @if (authService.isAuthenticated()) {
-    <button mat-menu-item routerLink="/articles">Articles</button>
-    <button mat-menu-item routerLink="/themes">Thèmes</button>
-    <button mat-menu-item routerLink="/user"><mat-icon>account_circle</mat-icon></button>
+    <a mat-menu-item routerLink="/articles">Articles</a>
+    <a mat-menu-item routerLink="/topics">Thèmes</a>
+    <a mat-menu-item routerLink="/user"><mat-icon>account_circle</mat-icon></a>
     }
 </mat-menu>

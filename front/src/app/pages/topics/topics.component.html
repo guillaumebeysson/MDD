@@ -1,0 +1,6 @@
+<h1>Liste des thèmes</h1>
+<div class="topic-list">
+    @for (topic of topics; track topic) {
+    <app-topic-item [topic]="topic"></app-topic-item>
+    }
+</div>

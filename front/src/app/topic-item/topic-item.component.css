@@ -1,0 +1,28 @@
+mat-card {
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+mat-card:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+mat-card-content p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+mat-card-title {
+    font-weight: 500;
+    margin: 10px 15px;
+}
+
+mat-card-actions {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 10px;
+}
