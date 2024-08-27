@@ -67,6 +67,7 @@ public class UserService {
             if (userWithSameName != null && !userWithSameName.getId().equals(currentUser.getId())) {
                 throw new ConflictException("Name " + updateUserRequest.getName() + " is already used");
             }
+            currentUser.setName(updateUserRequest.getName());
         }
 
         // Vérification si l'email est déjà utilisé par un autre utilisateur
