@@ -1,0 +1,36 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 140px;
+}
+
+.articles-list {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+mat-icon {
+    height: 20px;
+
+}
+
+.sort-by {
+    cursor: pointer;
+}
+
+app-article {
+    width: 100%;
+    max-width: 400px;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: 120px;
+        width: 200px;
+        margin: 30px auto;
+    }
+}

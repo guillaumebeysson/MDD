@@ -1,1 +1,16 @@
-<p>articles works!</p>
+<div class="header">
+    <button mat-raised-button>Créer un article</button>
+    <span class="sort-by">
+        Trier par
+        <mat-select [(value)]="sortCriteria" (selectionChange)="sortArticles()">
+            <mat-option value="date">Date</mat-option>
+            <mat-option value="author">Auteur</mat-option>
+            <mat-option value="title">Titre</mat-option>
+        </mat-select>
+    </span>
+</div>
+<div class="articles-list">
+    @for (article of sortedArticles; track article) {
+    <app-article [article]="article"></app-article>
+    }
+</div>

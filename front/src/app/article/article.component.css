@@ -1,0 +1,30 @@
+mat-card {
+    padding: 10px;
+    transition: all 0.3s ease;
+    height: 230px;
+}
+
+mat-card:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.header-card {
+    margin: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    color: grey;
+}
+
+mat-card-content p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+mat-card-title {
+    font-weight: 500;
+    margin: 10px 15px;
+}
