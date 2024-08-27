@@ -1,22 +1,33 @@
 <h3>Profil utilisateur</h3>
 <!-- <form class="update-form" (ngSubmit)="onSubmit()"> -->
-<form class="update-form">
+<form class="update-form" (ngSubmit)="updateProfile()">
     <mat-form-field appearance="fill">
         <mat-label>Nom d'utilisateur</mat-label>
         <input matInput [(ngModel)]="username" name="username" />
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Adresse email</mat-label>
-        <input matInput [(ngModel)]="email" name="email" />
+        <input matInput [(ngModel)]="email" name="email" email />
+        @if ("email.invalid && (email.dirty || email.touched)") {
+        <mat-error>Email non valide</mat-error>
+        }
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Mot de passe</mat-label>
-        <input matInput [(ngModel)]="password" name="password" type="password" />
+        <input matInput [(ngModel)]="password" name="password" type="password" required minlength="8"
+            pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$" />
+        @if ("password.invalid && (password.dirty || password.touched)") {
+        <mat-error>Le mot de passe doit comporter au minimum 8 caractères, avec au moins une majuscule, un chiffre, et
+            un caractère
+            spécial.</mat-error>
+        }
     </mat-form-field>
-    <button mat-raised-button type="submit">Sauvegarder</button>
+    <button class="save-btn" mat-raised-button type="submit">Sauvegarder</button>
     <button class="disconnected" mat-button (click)="logout()">Se déconnecter</button>
 </form>
-<hr>
+<div class="line-separation">
+    <hr>
+</div>
 <h3>Abonnements</h3>
 <div class="topic-list">
     @for (topic of subscribedTopics; track topic.id) {

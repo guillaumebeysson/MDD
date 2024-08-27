@@ -10,11 +10,20 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Adresse email</mat-label>
-        <input matInput [(ngModel)]="email" name="email" required />
+        <input matInput [(ngModel)]="email" name="email" required email />
+        @if ("email.invalid && (email.dirty || email.touched)") {
+        <mat-error>Email non valide</mat-error>
+        }
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Mot de passe</mat-label>
-        <input matInput [(ngModel)]="password" name="password" type="password" required />
+        <input matInput [(ngModel)]="password" name="password" type="password" required minlength="8"
+            pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$" />
+        @if ("password.invalid && (password.dirty || password.touched)") {
+        <mat-error>Le mot de passe doit comporter au minimum 8 caractères, avec au moins une majuscule, un chiffre, et
+            un caractère
+            spécial.</mat-error>
+        }
     </mat-form-field>
-    <button mat-raised-button type="submit">S'inscrire</button>
+    <button class="save-btn" mat-raised-button type="submit">S'inscrire</button>
 </form>

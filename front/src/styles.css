@@ -17,30 +17,14 @@ button {
     background-color: #7550EC !important;
 }
 
-.snackbar-success {
+.snackbar-success * {
     background: #4BB543 !important;
     color: white !important;
-    border: solid 3px #4BB543 !important;
     border-radius: 5px !important;
 }
 
-.snackbar-success button {
-    background-color: none !important;
-    background: none !important;
-    color: white !important;
-    border: none !important;
-}
-
-.snackbar-error {
+.snackbar-error * {
     background: #F44336 !important;
     color: white !important;
-    border: solid 3px #F44336 !important;
     border-radius: 5px !important;
-}
-
-.snackbar-error button {
-    background-color: none !important;
-    background: none !important;
-    color: white !important;
-    border: none !important;
 }

@@ -29,6 +29,10 @@ img {
     margin: 0 auto;
 }
 
+.save-btn {
+    margin-top: 20px;
+}
+
 
 
 @media (max-width: 768px) {
@@ -38,5 +42,11 @@ img {
 
     img {
         display: block;
+    }
+}
+
+@media (max-width: 442px) {
+    .save-btn {
+        margin-top: 40px;
     }
 }

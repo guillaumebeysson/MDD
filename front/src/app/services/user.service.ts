@@ -25,5 +25,13 @@ export class UserService {
     return this.http.get<Topic[]>(`${this.baseUrl}user/subscriptions`);
   }
 
+  getCurrentUser(): Observable<{ name: string, email: string }> {
+    return this.http.get<{ name: string, email: string }>(`${this.baseUrl}user`);
+  }
+
+  updateUserProfile(profile: { name?: string, email?: string, password?: string }): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}user`, profile);
+  }
+
 
 }

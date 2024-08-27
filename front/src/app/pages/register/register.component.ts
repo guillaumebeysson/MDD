@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardContent, MatCardModule, MatCardTitle } from '@angular/material/card';
-import { MatFormField, MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatError, MatFormField, MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -23,6 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInput,
     MatButton,
     MatIcon,
+    MatError,
     ReactiveFormsModule,
     BackButtonComponent],
   templateUrl: './register.component.html',
@@ -47,10 +48,25 @@ export class RegisterComponent {
         });
       },
       error: (error) => {
-        this.snackBar.open(error.error?.message || 'Une erreur s\'est produite. Veuillez réessayer.', 'X', {
-          duration: 4000,
-          panelClass: ['snackbar-error']
-        });
+        if (error.status === 409) {
+          if (error.error?.message.includes('User with email')) {
+            this.snackBar.open('Un utilisateur avec cet email existe déjà.', 'X', {
+              duration: 4000,
+              panelClass: ['snackbar-error']
+            });
+          } else if (error.error?.message.includes('User with name')) {
+            this.snackBar.open('Un utilisateur avec ce nom existe déjà.', 'X', {
+              duration: 4000,
+              panelClass: ['snackbar-error']
+            });
+          }
+        } else {
+          // Gérer les autres types d'erreurs
+          this.snackBar.open(error.error?.message || 'Une erreur s\'est produite. Veuillez réessayer.', 'X', {
+            duration: 4000,
+            panelClass: ['snackbar-error']
+          });
+        }
       }
     });
   }
