@@ -1,8 +1,9 @@
 mat-card {
     padding: 10px;
     transition: all 0.3s ease;
-    height: 230px;
+    height: 240px;
     cursor: pointer;
+    max-width: 600px;
 }
 
 mat-card:hover {
@@ -26,6 +27,28 @@ mat-card-content p {
 
 
 mat-card-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-weight: 500;
-    margin: 10px 15px;
+    margin: 15px 15px 30px 15px;
+}
+
+mat-icon {
+    color: #7550EC;
+}
+
+.createdAt {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+
+.username {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+
 }

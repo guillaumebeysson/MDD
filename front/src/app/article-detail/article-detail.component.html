@@ -12,17 +12,20 @@
     <hr>
     <div class="comments">
         <h3>Commentaires</h3>
-        <!-- <form class="comment-form" (ngSubmit)="onSubmit()"> -->
-        <form class="comment-form">
+        @for (comment of comments; track comment) {
+        <div class="comment-item">
+            <p class="header-comment"><mat-icon>account_circle</mat-icon>{{ comment.username | titlecase }} - {{
+                comment.createdAt | date:
+                'dd/MM/yyyy HH:mm'
+                }}</p>
+            <p>{{ comment.content }}</p>
+        </div>
+        }
+        <form class="comment-form" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="fill">
                 <mat-label>Ajouter un commentaire</mat-label>
-                <!-- <textarea matInput [(ngModel)]="content" name="content" required></textarea> -->
-                <textarea matInput name="content" required></textarea>
-                @if ("content.invalid && (content.dirty || content.touched)") {
-                <mat-error>Veuillez ajouter du contenu</mat-error>
-                }
+                <textarea matInput [(ngModel)]="content" name="content"></textarea>
             </mat-form-field>
-
             <button class="send-btn" type="submit"><mat-icon>send</mat-icon></button>
         </form>
     </div>

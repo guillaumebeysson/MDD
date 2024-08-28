@@ -1,8 +1,8 @@
 <mat-card (click)="onSelect()">
     <mat-card-title>{{ article.title }}</mat-card-title>
     <div class="header-card">
-        <p>{{ article.createdAt | date: 'dd/MM/yyyy'}}</p>
-        <p>{{ article.username | titlecase }}</p>
+        <p class="createdAt"><mat-icon>date_range</mat-icon> {{ article.createdAt | date: 'dd/MM/yyyy'}}</p>
+        <p class="username"><mat-icon>account_circle</mat-icon> {{ article.username | titlecase }}</p>
     </div>
     <mat-card-content>
         <p>{{ article.content }}</p>

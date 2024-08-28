@@ -3,6 +3,7 @@ import { Article } from '../interfaces/article.interface';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-article',
@@ -11,7 +12,8 @@ import { Router } from '@angular/router';
     MatCardTitle,
     MatCardHeader,
     MatCardContent,
-    CommonModule
+    CommonModule,
+    MatIcon
   ],
   templateUrl: './article.component.html',
   styleUrl: './article.component.css'
