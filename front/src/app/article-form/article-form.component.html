@@ -1,0 +1,33 @@
+<app-back-button></app-back-button>
+<h2>Créer un nouvel article</h2>
+<form class="article-form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+        <mat-label>Thème</mat-label>
+        <mat-select [(ngModel)]="selectedTopicId" name="topic" required>
+            @for (topic of topics; track topic) {
+            <mat-option [value]="topic.id">{{ topic.title }}</mat-option>
+            }
+        </mat-select>
+        @if ("topic.invalid && (topic.dirty || topic.touched)") {
+        <mat-error>Veuillez sélectionner un thème</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Titre de l'article</mat-label>
+        <input matInput [(ngModel)]="title" name="title" required />
+        @if ("title.invalid && (title.dirty || title.touched)") {
+        <mat-error>Veuillez ajouter un titre</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Contenu de l'article</mat-label>
+        <textarea matInput [(ngModel)]="content" name="content" required></textarea>
+        @if ("content.invalid && (content.dirty || content.touched)") {
+        <mat-error>Veuillez ajouter du contenu</mat-error>
+        }
+    </mat-form-field>
+
+    <button mat-raised-button class="create-btn" type="submit">Créer</button>
+</form>

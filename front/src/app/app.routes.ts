@@ -5,6 +5,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ArticlesComponent } from './pages/articles/articles.component';
 import { UserComponent } from './pages/user/user.component';
 import { TopicsComponent } from './pages/topics/topics.component';
+import { ArticleFormComponent } from './article-form/article-form.component';
+import { ArticleDetailComponent } from './article-detail/article-detail.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -13,4 +15,6 @@ export const routes: Routes = [
     { path: 'articles', component: ArticlesComponent },
     { path: 'topics', component: TopicsComponent },
     { path: 'user', component: UserComponent },
+    { path: 'articles/create-article', component: ArticleFormComponent },
+    { path: 'articles/:id', component: ArticleDetailComponent },
 ];

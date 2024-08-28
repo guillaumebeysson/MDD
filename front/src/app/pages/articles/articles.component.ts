@@ -5,6 +5,7 @@ import { ArticleComponent } from '../../article/article.component';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatOption, MatSelect } from '@angular/material/select';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-articles',
@@ -13,7 +14,8 @@ import { MatOption, MatSelect } from '@angular/material/select';
     MatButton,
     MatIcon,
     MatSelect,
-    MatOption
+    MatOption,
+    RouterLink
   ],
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.css'

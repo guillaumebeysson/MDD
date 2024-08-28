@@ -59,7 +59,6 @@ export class UserComponent implements OnInit {
       next: (user) => {
         this.username = user.name;
         this.email = user.email;
-        console.log('loadUserProfile--------------', user);
       },
       error: (error) => {
         this.snackBar.open('Erreur lors de la récupération des informations de profil', 'X', {

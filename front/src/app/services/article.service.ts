@@ -17,5 +17,12 @@ export class ArticleService {
     return this.http.get<Article[]>(`${this.baseUrl}posts`);
   }
 
+  createArticle(articleData: { title: string, content: string, userId: number, topicId: number | null }): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}posts`, articleData);
+  }
+
+  getArticleById(id: number): Observable<Article> {
+    return this.http.get<Article>(`${this.baseUrl}posts/${id}`);
+  }
 
 }

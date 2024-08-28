@@ -1,0 +1,29 @@
+<div class="back-btn-and-title">
+    <app-back-button></app-back-button>
+</div>
+<div class="article-container">
+    <h2>{{ article.title }}</h2>
+    <div class="header-article-details">
+        <p class="createdAt"><mat-icon>date_range</mat-icon>{{ article.createdAt | date: 'dd/MM/yyyy' }}</p>
+        <p class="username"><mat-icon>account_circle</mat-icon>{{ article.username | titlecase }}</p>
+        <p class="topicTitle"><mat-icon>bookmark</mat-icon>{{ article.topicTitle }}</p>
+    </div>
+    <p class="content">{{ article.content }}</p>
+    <hr>
+    <div class="comments">
+        <h3>Commentaires</h3>
+        <!-- <form class="comment-form" (ngSubmit)="onSubmit()"> -->
+        <form class="comment-form">
+            <mat-form-field appearance="fill">
+                <mat-label>Ajouter un commentaire</mat-label>
+                <!-- <textarea matInput [(ngModel)]="content" name="content" required></textarea> -->
+                <textarea matInput name="content" required></textarea>
+                @if ("content.invalid && (content.dirty || content.touched)") {
+                <mat-error>Veuillez ajouter du contenu</mat-error>
+                }
+            </mat-form-field>
+
+            <button class="send-btn" type="submit"><mat-icon>send</mat-icon></button>
+        </form>
+    </div>
+</div>
