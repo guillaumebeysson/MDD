@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { Article } from '../interfaces/article.interface';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class ArticleService {
   }
 
   getArticleById(id: number): Observable<Article> {
-    return this.http.get<Article>(`${this.baseUrl}posts/${id}`);
+    return this.http.get<Article>(`${this.baseUrl}posts/${id}`).pipe(delay(1000));
   }
 
 }

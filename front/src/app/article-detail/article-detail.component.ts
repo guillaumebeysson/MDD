@@ -13,6 +13,8 @@ import { MatButton } from '@angular/material/button';
 import { CommentService } from '../services/comment.service';
 import { Comment } from '../interfaces/comment.interface';
 import { UserService } from '../services/user.service';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 
 @Component({
@@ -25,7 +27,8 @@ import { UserService } from '../services/user.service';
     FormsModule,
     MatError,
     MatInput,
-    MatButton],
+    MatButton,
+    LoadingSpinnerComponent],
   templateUrl: './article-detail.component.html',
   styleUrl: './article-detail.component.css'
 })

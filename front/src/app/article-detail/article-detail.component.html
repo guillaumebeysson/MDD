@@ -2,6 +2,7 @@
     <app-back-button></app-back-button>
 </div>
 <div class="article-container">
+    @if (article) {
     <h2>{{ article.title }}</h2>
     <div class="header-article-details">
         <p class="createdAt"><mat-icon>date_range</mat-icon>{{ article.createdAt | date: 'dd/MM/yyyy' }}</p>
@@ -29,4 +30,7 @@
             <button class="send-btn" type="submit"><mat-icon>send</mat-icon></button>
         </form>
     </div>
+    } @else {
+    <app-loading-spinner></app-loading-spinner>
+    }
 </div>

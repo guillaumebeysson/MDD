@@ -55,7 +55,7 @@ export class ArticleFormComponent {
   loadTopics(): void {
     this.topicService.getTopics().subscribe({
       next: (data) => {
-        this.topics = data;
+        this.topics = data.sort((a, b) => a.title.localeCompare(b.title));
       },
       error: (error) => {
         this.snackBar.open('Erreur lors de la récupération des thèmes.', 'X', {
