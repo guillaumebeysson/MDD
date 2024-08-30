@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { delay, Observable } from 'rxjs';
 import { Article } from '../interfaces/article.interface';
+import { ArticleData } from '../interfaces/articleData.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ArticleService {
     return this.http.get<Article[]>(`${this.baseUrl}posts`);
   }
 
-  createArticle(articleData: { title: string, content: string, userId: number, topicId: number | null }): Observable<void> {
+  createArticle(articleData: ArticleData): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}posts`, articleData);
   }
 

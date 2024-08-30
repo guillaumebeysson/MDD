@@ -12,6 +12,7 @@ import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
+import { ArticleData } from '../interfaces/articleData.interface';
 
 
 @Component({
@@ -81,7 +82,7 @@ export class ArticleFormComponent {
       return;
     }
 
-    const articleData = {
+    const articleData: ArticleData = {
       title: this.title,
       content: this.content,
       userId: this.userId,

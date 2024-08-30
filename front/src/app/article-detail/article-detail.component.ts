@@ -15,6 +15,7 @@ import { Comment } from '../interfaces/comment.interface';
 import { UserService } from '../services/user.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { CommentData } from '../interfaces/commentData.interface';
 
 
 @Component({
@@ -103,7 +104,7 @@ export class ArticleDetailComponent implements OnInit {
       return;
     }
 
-    const commentData = {
+    const commentData: CommentData = {
       content: this.content,
       postId: this.article.id,
       userId: this.userId
