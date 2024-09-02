@@ -13,6 +13,7 @@ import { MatOption, MatSelect } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { ArticleData } from '../interfaces/articleData.interface';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -38,12 +39,12 @@ export class ArticleFormComponent {
   selectedTopicId: number | null = null;
   topics: Topic[] = [];
   userId: number | null = null;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private topicService: TopicService,
     private articleService: ArticleService,
     private snackBar: MatSnackBar,
-    private authService: AuthService,
     private userService: UserService,
     private router: Router
   ) { }
@@ -54,23 +55,27 @@ export class ArticleFormComponent {
   }
 
   loadTopics(): void {
-    this.topicService.getTopics().subscribe({
-      next: (data) => {
-        this.topics = data.sort((a, b) => a.title.localeCompare(b.title));
-      },
-      error: (error) => {
-        this.snackBar.open('Erreur lors de la récupération des thèmes.', 'X', {
-          duration: 3000,
-          panelClass: ['snackbar-error']
-        });
-      }
-    });
+    this.subscriptions.add(
+      this.topicService.getTopics().subscribe({
+        next: (data) => {
+          this.topics = data.sort((a, b) => a.title.localeCompare(b.title));
+        },
+        error: (error) => {
+          this.snackBar.open('Erreur lors de la récupération des thèmes.', 'X', {
+            duration: 3000,
+            panelClass: ['snackbar-error']
+          });
+        }
+      })
+    );
   }
 
   loadUserId(): void {
-    this.userService.getCurrentUser().subscribe(user => {
-      this.userId = user ? user.id : null;
-    });
+    this.subscriptions.add(
+      this.userService.getCurrentUser().subscribe(user => {
+        this.userId = user ? user.id : null;
+      })
+    );
   }
 
   onSubmit(): void {
@@ -89,20 +94,26 @@ export class ArticleFormComponent {
       topicId: this.selectedTopicId
     };
 
-    this.articleService.createArticle(articleData).subscribe({
-      next: () => {
-        this.snackBar.open('Article créé avec succès.', 'X', {
-          duration: 3000,
-          panelClass: ['snackbar-success']
-        });
-        this.router.navigate(['/articles']);
-      },
-      error: (error) => {
-        this.snackBar.open(error.error?.message || 'Erreur lors de la création de l\'article.', 'X', {
-          duration: 3000,
-          panelClass: ['snackbar-error']
-        });
-      }
-    });
+    this.subscriptions.add(
+      this.articleService.createArticle(articleData).subscribe({
+        next: () => {
+          this.snackBar.open('Article créé avec succès.', 'X', {
+            duration: 3000,
+            panelClass: ['snackbar-success']
+          });
+          this.router.navigate(['/articles']);
+        },
+        error: (error) => {
+          this.snackBar.open(error.error?.message || 'Erreur lors de la création de l\'article.', 'X', {
+            duration: 3000,
+            panelClass: ['snackbar-error']
+          });
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

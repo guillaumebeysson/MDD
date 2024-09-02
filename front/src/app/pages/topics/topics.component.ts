@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Topic } from '../../interfaces/topic.interface';
 import { TopicService } from '../../services/topic.service';
 import { TopicItemComponent } from "../../topic-item/topic-item.component";
@@ -17,11 +17,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class TopicsComponent implements OnInit {
 
   topics: Topic[] = [];
+  subscription!: Subscription;
+
 
   constructor(private topicService: TopicService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.topicService.getTopics().subscribe({
+    this.subscription = this.topicService.getTopics().subscribe({
       next: (data) => {
         this.topics = data;
       },
@@ -32,6 +34,12 @@ export class TopicsComponent implements OnInit {
         });
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

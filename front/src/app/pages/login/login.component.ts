@@ -41,21 +41,27 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) { }
 
   onSubmit(): void {
-    this.subscription = this.authService.login(this.emailOrUsername, this.password).subscribe(
-      (data) => {
+    this.subscription = this.authService.login(this.emailOrUsername, this.password).subscribe({
+      next: (data) => {
         this.router.navigate(['/articles']);
         this.snackBar.open('Vous êtes connecté !', 'X', {
           duration: 4000,
           panelClass: ['snackbar-success']
         });
       },
-      (error) => {
+      error: (error) => {
         this.snackBar.open(error.error?.message || 'Une erreur s\'est produite. Veuillez réessayer.', 'X', {
           duration: 4000,
           panelClass: ['snackbar-error']
         })
       }
-    );
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

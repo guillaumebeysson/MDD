@@ -6,6 +6,7 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-articles',
@@ -25,11 +26,12 @@ export class ArticlesComponent implements OnInit {
   articles: Article[] = [];
   sortedArticles: Article[] = [];
   sortCriteria: string = 'date';  // Par défaut, on tri par date
+  subscription!: Subscription;
 
   constructor(private articleService: ArticleService) { }
 
   ngOnInit(): void {
-    this.articleService.getArticles().subscribe((data: Article[]) => {
+    this.subscription = this.articleService.getArticles().subscribe((data: Article[]) => {
       this.articles = data;
       this.sortArticles();
     });
@@ -60,6 +62,12 @@ export class ArticlesComponent implements OnInit {
         if (titleA > titleB) return 1;
         return 0;
       });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 }

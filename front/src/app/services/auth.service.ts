@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
+import { AuthResponse } from '../interfaces/authResponse.interface';
+import { LoginRequest } from '../interfaces/loginRequest.interface';
+import { RegisterRequest } from '../interfaces/registerRequest.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +25,10 @@ export class AuthService {
     return this.tokenSubject.value;
   }
 
-  login(emailOrUsername: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}auth/login`, { emailOrUsername, password }).pipe(
-      map((response) => {
+  login(emailOrUsername: string, password: string): Observable<AuthResponse> {
+    const requestData: LoginRequest = { emailOrUsername, password };
+    return this.http.post<AuthResponse>(`${this.baseUrl}auth/login`, requestData).pipe(
+      map((response: AuthResponse) => {
         if (response.token) {
           this.setToken(response.token);
         }
@@ -38,9 +42,10 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
-  register(name: string, email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}auth/register`, { name, email, password }).pipe(
-      map((response) => {
+  register(name: string, email: string, password: string): Observable<AuthResponse> {
+    const requestData: RegisterRequest = { name, email, password };
+    return this.http.post<AuthResponse>(`${this.baseUrl}auth/register`, requestData).pipe(
+      map((response: AuthResponse) => {
         if (response.token) {
           this.setToken(response.token);
         }
