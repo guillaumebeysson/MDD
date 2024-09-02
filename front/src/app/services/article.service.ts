@@ -18,8 +18,8 @@ export class ArticleService {
     return this.http.get<Article[]>(`${this.baseUrl}posts`);
   }
 
-  createArticle(articleData: ArticleData): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}posts`, articleData);
+  createArticle(articleData: ArticleData): Observable<Article> {
+    return this.http.post<Article>(`${this.baseUrl}posts`, articleData);
   }
 
   getArticleById(id: number): Observable<Article> {

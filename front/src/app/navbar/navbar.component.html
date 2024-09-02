@@ -1,5 +1,9 @@
 <mat-toolbar>
-    <img src="/logo-mdd.png" alt="Logo" class="logo">
+    @if (authService.isAuthenticated()) {
+    <img src="/logo-mdd.png" alt="Logo" class="logo" routerLink="/articles">
+    } @else {
+    <img src="/logo-mdd.png" alt="Logo" class="logo" routerLink="">
+    }
     <span class="spacer"></span>
     @if (authService.isAuthenticated()) {
     <button mat-icon-button matMenuTrigger [matMenuTriggerFor]="menu">

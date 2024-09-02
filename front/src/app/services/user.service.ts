@@ -3,6 +3,8 @@ import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Topic } from '../interfaces/topic.interface';
+import { User } from '../interfaces/user.interface';
+import { UserProfileUpdate } from '../interfaces/userProfileUpdate.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +27,11 @@ export class UserService {
     return this.http.get<Topic[]>(`${this.baseUrl}user/subscriptions`);
   }
 
-  getCurrentUser(): Observable<{ name: string, email: string, id: number }> {
-    return this.http.get<{ name: string, email: string, id: number }>(`${this.baseUrl}user`);
+  getCurrentUser(): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}user`);
   }
 
-  updateUserProfile(profile: { name?: string, email?: string, password?: string }): Observable<void> {
+  updateUserProfile(profile: UserProfileUpdate): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}user`, profile);
   }
 

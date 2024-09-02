@@ -40,7 +40,7 @@ export class RegisterComponent {
 
   onSubmit(): void {
     this.subscription = this.authService.register(this.username, this.email, this.password).subscribe({
-      next: (data) => {
+      next: () => {
         this.router.navigate(['/articles']);
         this.snackBar.open('Inscription réussie, vous êtes connecté !', 'X', {
           duration: 4000,

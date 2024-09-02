@@ -104,7 +104,7 @@ export class ArticleDetailComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.content.trim()) {
-      this.snackBar.open('Veuillez ajouter du contenu', 'X', {
+      this.snackBar.open('Veuillez ajouter du contenu pour envoyer un commentaire', 'X', {
         duration: 3000,
         panelClass: ['snackbar-error']
       });
