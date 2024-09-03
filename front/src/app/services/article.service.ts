@@ -18,6 +18,10 @@ export class ArticleService {
     return this.http.get<Article[]>(`${this.baseUrl}posts`);
   }
 
+  getSubscribedArticles(): Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.baseUrl}posts/interests`);
+  }
+
   createArticle(articleData: ArticleData): Observable<Article> {
     return this.http.post<Article>(`${this.baseUrl}posts`, articleData);
   }

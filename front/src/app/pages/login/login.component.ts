@@ -10,6 +10,7 @@ import { MatIcon } from '@angular/material/icon';
 import { BackButtonComponent } from "../../back-button/back-button.component";
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -38,22 +39,32 @@ export class LoginComponent {
   errorMessage: string | null = null;
   subscription!: Subscription;
 
-  constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar, private userService: UserService) { }
 
   onSubmit(): void {
     this.subscription = this.authService.login(this.emailOrUsername, this.password).subscribe({
-      next: (data) => {
-        this.router.navigate(['/articles']);
-        this.snackBar.open('Vous êtes connecté !', 'X', {
-          duration: 4000,
-          panelClass: ['snackbar-success']
+      next: () => {
+        this.userService.getCurrentUser().subscribe({
+          next: (user) => {
+            this.router.navigate(['/articles']);
+            this.snackBar.open(`Content de vous voir ${user.name} !`, 'X', {
+              duration: 4000,
+              panelClass: ['snackbar-success']
+            });
+          },
+          error: () => {
+            this.snackBar.open('Erreur lors de la récupération des informations utilisateur.', 'X', {
+              duration: 4000,
+              panelClass: ['snackbar-error']
+            });
+          }
         });
       },
       error: (error) => {
         this.snackBar.open(error.error?.message || 'Une erreur s\'est produite. Veuillez réessayer.', 'X', {
           duration: 4000,
           panelClass: ['snackbar-error']
-        })
+        });
       }
     });
   }

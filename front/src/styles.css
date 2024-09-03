@@ -23,8 +23,24 @@ button {
     border-radius: 5px !important;
 }
 
+
 .snackbar-error * {
     background: #F44336 !important;
     color: white !important;
     border-radius: 5px !important;
+
 }
+
+/******* SnackBar position ********/
+/* .snackbar-success {
+    position: absolute;
+    right: 25px;
+    top: 80px;
+    width: 300px !important;
+} */
+/* .snackbar-error {
+    position: absolute;
+    right: 25px;
+    top: 80px;
+    width: 300px !important;
+} */
