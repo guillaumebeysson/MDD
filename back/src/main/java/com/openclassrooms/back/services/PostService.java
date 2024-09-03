@@ -4,7 +4,10 @@ import com.openclassrooms.back.dto.PostRequest;
 import com.openclassrooms.back.exceptions.BadRequestException;
 import com.openclassrooms.back.exceptions.NotFoundException;
 import com.openclassrooms.back.models.Post;
+import com.openclassrooms.back.models.Topic;
+import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.PostRepository;
+import com.openclassrooms.back.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,8 @@ public class PostService {
 
     @Autowired
     private TopicService topicService;
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * Récupère tous les posts
@@ -88,6 +93,17 @@ public class PostService {
         post.setTopic(topicService.getTopicById(postRequest.getTopicId()));
 
         return postRepository.save(post);
+    }
+
+    public List<Post> getPostsByUserSubscriptions(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
+
+        // Obtenez tous les topics auxquels l'utilisateur est abonné
+        List<Topic> subscribedTopics = user.getTopics();
+
+        // Récupérez les posts de ces topics
+        return postRepository.findByTopicIn(subscribedTopics);
     }
 
 

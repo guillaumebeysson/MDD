@@ -2,7 +2,9 @@ package com.openclassrooms.back.controllers;
 
 import com.openclassrooms.back.dto.PostRequest;
 import com.openclassrooms.back.dto.PostResponse;
+import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.services.PostService;
+import com.openclassrooms.back.services.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+    @Autowired
+    private UserService userService;
 
     /**
      * Récupère tous les posts
@@ -46,6 +50,18 @@ public class PostController {
     @GetMapping("/topic/{topicId}")
     public List<PostResponse> getPostsByTopicId(@PathVariable Long topicId) {
         return postService.getPostsByTopicId(topicId).stream().map(PostResponse::new).collect(Collectors.toList());
+    }
+
+    /**
+     * Récupère les posts des topics auxquels l'utilisateur actuel est abonné
+     * @return liste des posts
+     */
+    @GetMapping("/interests")
+    public List<PostResponse> getSubscribedPosts() {
+        User currentUser = userService.getCurrentUser();
+        return postService.getPostsByUserSubscriptions(currentUser.getId()).stream()
+                .map(PostResponse::new)
+                .collect(Collectors.toList());
     }
 
     /**
