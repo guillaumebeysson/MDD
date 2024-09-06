@@ -61,7 +61,6 @@ export class RegisterComponent {
             });
           }
         } else {
-          // Gérer les autres types d'erreurs
           this.snackBar.open(error.error?.message || 'Une erreur s\'est produite. Veuillez réessayer.', 'X', {
             duration: 4000,
             panelClass: ['snackbar-error']

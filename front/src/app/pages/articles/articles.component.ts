@@ -44,7 +44,7 @@ export class ArticlesComponent implements OnInit {
       this.sortedArticles.sort((a, b) => {
         const dateA = new Date(a.createdAt).getTime();
         const dateB = new Date(b.createdAt).getTime();
-        return dateB - dateA;  // Tri par date, du plus récent au plus ancien
+        return dateB - dateA;
       });
     } else if (this.sortCriteria === 'author') {
       this.sortedArticles.sort((a, b) => {
