@@ -37,6 +37,9 @@ export class ArticlesComponent implements OnInit {
     });
   }
 
+  /**
+   * Trie les articles en fonction du critère de tri choisi
+   */
   sortArticles(): void {
     this.sortedArticles = [...this.articles];
 

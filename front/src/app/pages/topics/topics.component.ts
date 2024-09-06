@@ -22,6 +22,9 @@ export class TopicsComponent implements OnInit {
 
   constructor(private topicService: TopicService, private snackBar: MatSnackBar) { }
 
+  /**
+   * Récupère la liste des topics
+   */
   ngOnInit(): void {
     this.subscription = this.topicService.getTopics().subscribe({
       next: (data) => {

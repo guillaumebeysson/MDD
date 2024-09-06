@@ -25,6 +25,12 @@ export class AuthService {
     return this.tokenSubject.value;
   }
 
+  /**
+   * Connexion de l'utilisateur
+   * @param emailOrUsername 
+   * @param password 
+   * @returns token
+   */
   login(emailOrUsername: string, password: string): Observable<AuthResponse> {
     const requestData: LoginRequest = { emailOrUsername, password };
     return this.http.post<AuthResponse>(`${this.baseUrl}auth/login`, requestData).pipe(
@@ -37,11 +43,21 @@ export class AuthService {
     );
   }
 
+  /**
+   * Déconnecte l'utilisateur
+   */
   logout(): void {
     this.clearToken();
     this.router.navigate(['/']);
   }
 
+  /**
+   * Inscription de l'utilisateur
+   * @param name 
+   * @param email 
+   * @param password 
+   * @returns token
+   */
   register(name: string, email: string, password: string): Observable<AuthResponse> {
     const requestData: RegisterRequest = { name, email, password };
     return this.http.post<AuthResponse>(`${this.baseUrl}auth/register`, requestData).pipe(
@@ -54,15 +70,26 @@ export class AuthService {
     );
   }
 
+  /**
+   * Vérifie si l'utilisateur est connecté
+   * @returns boolean
+   */
   isAuthenticated(): boolean {
     return !!this.tokenValue;
   }
 
+  /**
+   * Enregistre le token dans le local storage
+   * @param token 
+   */
   private setToken(token: string): void {
     localStorage.setItem('token', token);
     this.tokenSubject.next(token);
   }
 
+  /**
+   * Supprime le token du local storage
+   */
   private clearToken(): void {
     localStorage.removeItem('token');
     this.tokenSubject.next(null);

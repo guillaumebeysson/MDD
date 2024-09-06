@@ -38,6 +38,9 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) { }
 
+  /**
+   * Inscription de l'utilisateur
+   */
   onSubmit(): void {
     this.subscription = this.authService.register(this.username, this.email, this.password).subscribe({
       next: () => {
