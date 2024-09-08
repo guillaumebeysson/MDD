@@ -1,5 +1,5 @@
 # MDD
-MDD (Monde de Dev) is a developer-focused social network by ORION, designed to connect developers, help with job searches, and support company recruitment. The MVP allows users to follow programming topics, view related articles, write posts, and comment.
+MDD (Dev World) is ORION's developer-focused social network, designed to connect developers, share articles via predefined themes. The MVP allows users to follow programming topics, view related articles, write messages and make comments.
 
 ## Technologies used
 
