@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   public get tokenValue(): string | null {
-    return this.tokenSubject.value;
+    return localStorage.getItem('token');
   }
 
   /**
