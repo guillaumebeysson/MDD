@@ -46,7 +46,6 @@ MDD (Monde de Dev) is a developer-focused social network by ORION, designed to c
 ### Front-end
 - Open directory `/MDD/front` in your IDE
 - Install the dependencies: `npm install`
-- Build the project: `ng build`
 - Start the front-end development server: `ng serve`
 - To use the app, navigate to: http://localhost:4200
 - To test the app, you can create a new user or use existing credentials: 

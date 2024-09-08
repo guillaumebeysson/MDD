@@ -58,6 +58,10 @@ export class ArticleDetailComponent implements OnInit {
     }
   }
 
+  /**
+   * Charge les détails de l'article
+   * @param articleId Id de l'article
+   */
   loadArticleDetails(articleId: number): void {
     this.subscriptions.add(
       this.articleService.getArticleById(articleId).subscribe({
@@ -72,6 +76,10 @@ export class ArticleDetailComponent implements OnInit {
     );
   }
 
+  /**
+   * Charge les commentaires de l'article
+   * @param articleId Id de l'article
+   */
   loadComments(articleId: number): void {
     this.subscriptions.add(
       this.commentService.getCommentsByArticleId(articleId).subscribe({
@@ -86,6 +94,9 @@ export class ArticleDetailComponent implements OnInit {
     );
   }
 
+  /**
+   * Charge l'id de l'utilisateur actuel
+   */
   loadUserId(): void {
     this.subscriptions.add(
       this.userService.getCurrentUser().subscribe({
@@ -102,6 +113,9 @@ export class ArticleDetailComponent implements OnInit {
     );
   }
 
+  /**
+   * Ajoute un commentaire
+   */
   onSubmit(): void {
     if (!this.content.trim()) {
       this.snackBar.open('Veuillez ajouter du contenu pour envoyer un commentaire', 'X', {

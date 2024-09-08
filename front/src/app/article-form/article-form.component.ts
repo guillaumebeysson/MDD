@@ -54,6 +54,9 @@ export class ArticleFormComponent {
     this.loadUserId();
   }
 
+  /**
+   * Récupère la liste des thèmes
+   */
   loadTopics(): void {
     this.subscriptions.add(
       this.topicService.getTopics().subscribe({
@@ -70,6 +73,9 @@ export class ArticleFormComponent {
     );
   }
 
+  /**
+   * Récupère l'identifiant de l'utilisateur connecté
+   */
   loadUserId(): void {
     this.subscriptions.add(
       this.userService.getCurrentUser().subscribe(user => {
@@ -78,6 +84,9 @@ export class ArticleFormComponent {
     );
   }
 
+  /**
+   * Crée un nouvel article
+   */
   onSubmit(): void {
     if (!this.userId) {
       this.snackBar.open('Utilisateur non identifié. Veuillez vous reconnecter.', 'X', {

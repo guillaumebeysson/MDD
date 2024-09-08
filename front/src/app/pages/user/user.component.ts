@@ -47,15 +47,25 @@ export class UserComponent implements OnInit {
     this.loadSubscribedTopics();
   }
 
+  /**
+   * Supprime un thème à la liste des thèmes abonnés
+   * @param topicId Identifiant du thème
+   */
   removeTopic(topicId: number): void {
     this.subscribedTopics = this.subscribedTopics.filter(topic => topic.id !== topicId);
     console.log('removeTopic--------------', topicId);
   }
 
+  /**
+   * Déconnecte l'utilisateur
+   */
   logout(): void {
     this.authService.logout();
   }
 
+  /**
+   * Charge les informations de profil de l'utilisateur (nom, email)
+   */
   loadUserProfile(): void {
     this.subscriptions.add(
       this.userService.getCurrentUser().subscribe({
@@ -73,6 +83,9 @@ export class UserComponent implements OnInit {
     );
   }
 
+  /**
+   * Charge les thèmes auxquels l'utilisateur est abonné
+   */
   loadSubscribedTopics(): void {
     this.subscriptions.add(
       this.userService.getSubscribedTopics().subscribe({
@@ -82,6 +95,9 @@ export class UserComponent implements OnInit {
     );
   }
 
+  /**
+   * Met à jour le profil de l'utilisateur
+   */
   updateProfile(): void {
     this.subscriptions.add(
       this.userService.updateUserProfile({ name: this.username, email: this.email, password: this.password }).subscribe({

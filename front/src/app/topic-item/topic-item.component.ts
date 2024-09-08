@@ -31,6 +31,9 @@ export class TopicItemComponent {
 
   constructor(private userService: UserService, private snackBar: MatSnackBar) { }
 
+  /**
+   * Abonne ou désabonne l'utilisateur du thème
+   */
   onSubscribe() {
     {
       if (this.isSubscribed) {

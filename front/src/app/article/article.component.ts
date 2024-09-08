@@ -24,6 +24,9 @@ export class ArticleComponent {
 
   constructor(private router: Router) { }
 
+  /**
+   * Redirige vers la page de l'article
+   */
   onSelect(): void {
     this.router.navigate([`/articles/${this.article.id}`]);
   }

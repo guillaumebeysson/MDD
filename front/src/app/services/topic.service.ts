@@ -14,6 +14,9 @@ export class TopicService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
+  /**
+   * Récupère la liste des topics
+   */
   getTopics(): Observable<Topic[]> {
     const token = this.authService.tokenValue;
     const headers = new HttpHeaders({
