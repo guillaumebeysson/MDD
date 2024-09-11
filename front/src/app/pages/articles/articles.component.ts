@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Article } from '../../interfaces/article.interface';
 import { ArticleService } from '../../services/article.service';
 import { ArticleComponent } from '../../article/article.component';
@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.css'
 })
-export class ArticlesComponent implements OnInit {
+export class ArticlesComponent implements OnInit, OnDestroy {
 
   articles: Article[] = [];
   sortedArticles: Article[] = [];

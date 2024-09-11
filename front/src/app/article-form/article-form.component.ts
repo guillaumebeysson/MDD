@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Topic } from '../interfaces/topic.interface';
 import { TopicService } from '../services/topic.service';
 import { ArticleService } from '../services/article.service';
@@ -33,7 +33,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './article-form.component.html',
   styleUrl: './article-form.component.css'
 })
-export class ArticleFormComponent {
+export class ArticleFormComponent implements OnInit, OnDestroy {
   title: string = '';
   content: string = '';
   selectedTopicId: number | null = null;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './topics.component.html',
   styleUrl: './topics.component.css'
 })
-export class TopicsComponent implements OnInit {
+export class TopicsComponent implements OnInit, OnDestroy {
 
   topics: Topic[] = [];
   subscription!: Subscription;
