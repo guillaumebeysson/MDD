@@ -1,9 +1,11 @@
 package com.openclassrooms.back.services;
 
 
+import com.openclassrooms.back.services.interfaces.JwtService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -12,8 +14,9 @@ import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
+
 @Service
-public class JwtService {
+public class JwtServiceImpl implements JwtService {
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -26,6 +29,7 @@ public class JwtService {
      * @param username le nom d'utilisateur
      * @return le token JWT
      */
+    @Override
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -40,6 +44,7 @@ public class JwtService {
      * @param token le token
      * @return le nom d'utilisateur
      */
+    @Override
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -51,6 +56,7 @@ public class JwtService {
      * @param <T> le type de la revendication
      * @return la revendication
      */
+    @Override
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -61,7 +67,8 @@ public class JwtService {
      * @param token le token
      * @return les revendications
      */
-    private Claims extractAllClaims(String token) {
+    @Override
+    public Claims extractAllClaims(String token) {
         try {
             return Jwts
                     .parserBuilder()
@@ -86,7 +93,8 @@ public class JwtService {
      * Récupère la clé secrète pour signer le token.
      * @return la clé secrète
      */
-    private Key getSignInKey() {
+    @Override
+    public Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -97,6 +105,7 @@ public class JwtService {
      * @param userDetails les détails de l'utilisateur
      * @return true si le token est valide, false sinon
      */
+    @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUserName(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
@@ -107,6 +116,7 @@ public class JwtService {
      * @param token le token
      * @return true si le token est expiré, false sinon
      */
+    @Override
     public boolean isTokenExpired(String token) {
         return extractAllClaims(token).getExpiration().before(new Date());
     }
@@ -116,7 +126,8 @@ public class JwtService {
      * @param token le token
      * @return la date d'expiration
      */
-    private Date extractExpiration(String token) {
+    @Override
+    public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 }

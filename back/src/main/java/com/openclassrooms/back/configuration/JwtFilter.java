@@ -1,7 +1,7 @@
 package com.openclassrooms.back.configuration;
 
-import com.openclassrooms.back.services.CustomUserDetailsService;
-import com.openclassrooms.back.services.JwtService;
+import com.openclassrooms.back.services.CustomUserDetailsServiceImpl;
+import com.openclassrooms.back.services.JwtServiceImpl;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,10 +21,10 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtService jwtService;
+    private JwtServiceImpl jwtService;
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private CustomUserDetailsServiceImpl userDetailsService;
 
     /***
      * Filtre qui vérifie la présence d'un token JWT dans le header de la requête.

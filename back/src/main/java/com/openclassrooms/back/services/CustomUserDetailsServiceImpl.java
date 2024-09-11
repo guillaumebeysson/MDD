@@ -4,6 +4,8 @@ import com.openclassrooms.back.exceptions.NotFoundException;
 import com.openclassrooms.back.exceptions.UnauthorizedException;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.UserRepository;
+import com.openclassrooms.back.services.interfaces.CustomUserDetailsService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,8 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
+@AllArgsConstructor
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsServiceImpl implements UserDetailsService, CustomUserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -48,6 +51,7 @@ public class CustomUserDetailsService implements UserDetailsService {
      * @param emailOrName l'email ou le nom d'utilisateur de l'utilisateur
      * @return les détails de l'utilisateur
      */
+    @Override
     public UserDetails loadUserByEmailOrName(String emailOrName) throws NotFoundException {
         User user = userRepository.findByEmail(emailOrName);
         if (user == null) {

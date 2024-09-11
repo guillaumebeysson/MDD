@@ -4,12 +4,11 @@ import com.openclassrooms.back.dto.TopicResponse;
 import com.openclassrooms.back.dto.UpdateUserRequest;
 import com.openclassrooms.back.dto.UserResponse;
 import com.openclassrooms.back.models.User;
-import com.openclassrooms.back.services.UserService;
+import com.openclassrooms.back.services.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     /**
      * Récupère l'utilisateur actuellement authentifié

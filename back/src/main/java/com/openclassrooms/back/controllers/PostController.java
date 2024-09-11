@@ -3,8 +3,8 @@ package com.openclassrooms.back.controllers;
 import com.openclassrooms.back.dto.PostRequest;
 import com.openclassrooms.back.dto.PostResponse;
 import com.openclassrooms.back.models.User;
-import com.openclassrooms.back.services.PostService;
-import com.openclassrooms.back.services.UserService;
+import com.openclassrooms.back.services.PostServiceImpl;
+import com.openclassrooms.back.services.UserServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 public class PostController {
 
     @Autowired
-    private PostService postService;
+    private PostServiceImpl postService;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     /**
      * Récupère tous les posts

@@ -7,6 +7,8 @@ import com.openclassrooms.back.models.Topic;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.TopicRepository;
 import com.openclassrooms.back.repositories.UserRepository;
+import com.openclassrooms.back.services.interfaces.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -31,6 +34,7 @@ public class UserService {
      * Récupère l'utilisateur actuellement connecté
      * @return l'utilisateur actuellement connecté
      */
+    @Override
     public User getCurrentUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -42,6 +46,7 @@ public class UserService {
      * @param id l'id de l'utilisateur
      * @return l'utilisateur
      */
+    @Override
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with id " + id + " not found"));
@@ -52,6 +57,7 @@ public class UserService {
      * @param updateUserRequest la requête de mise à jour
      * @return l'utilisateur mis à jour
      */
+    @Override
     public User updateUser(UpdateUserRequest updateUserRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -93,6 +99,7 @@ public class UserService {
      * @param userId l'id de l'utilisateur
      * @param topicId l'id du topic
      */
+    @Override
     public void subscribeToTopic(Long userId, Long topicId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
@@ -113,6 +120,7 @@ public class UserService {
      * @param userId l'id de l'utilisateur
      * @param topicId l'id du topic
      */
+    @Override
     public void unsubscribeFromTopic(Long userId, Long topicId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
@@ -133,6 +141,7 @@ public class UserService {
      * @param userId l'id de l'utilisateur
      * @return liste des topics abonnés
      */
+    @Override
     public List<Topic> getSubscribedTopics(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
