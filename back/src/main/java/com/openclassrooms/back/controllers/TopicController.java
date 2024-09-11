@@ -3,7 +3,6 @@ package com.openclassrooms.back.controllers;
 import com.openclassrooms.back.dto.TopicResponse;
 import com.openclassrooms.back.services.TopicServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +14,11 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 public class TopicController {
 
-    @Autowired
     private TopicServiceImpl topicService;
+
+    public TopicController(TopicServiceImpl topicService) {
+        this.topicService = topicService;
+    }
 
     /**
      * Récupère un topic par son identifiant
