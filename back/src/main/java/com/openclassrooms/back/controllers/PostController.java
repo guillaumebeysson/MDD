@@ -7,6 +7,7 @@ import com.openclassrooms.back.services.PostServiceImpl;
 import com.openclassrooms.back.services.UserServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -70,6 +71,7 @@ public class PostController {
      * @return post créé
      */
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public PostResponse createPost(@RequestBody PostRequest postRequest) {
         return new PostResponse(postService.createPost(postRequest));
     }

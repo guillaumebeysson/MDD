@@ -5,6 +5,7 @@ import com.openclassrooms.back.dto.CommentResponse;
 import com.openclassrooms.back.services.CommentServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +19,9 @@ public class CommentController {
 
     private CommentServiceImpl commentService;
 
-
     public CommentController(CommentServiceImpl commentService) {
         this.commentService = commentService;
     }
-
 
     /**
      * Récupère un commentaire par son identifiant
@@ -50,6 +49,7 @@ public class CommentController {
      * @return commentaire créé
      */
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CommentResponse createComment(@RequestBody @Valid CommentRequest commentRequest) {
         return new CommentResponse(commentService.createComment(commentRequest));
     }

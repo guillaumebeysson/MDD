@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,6 +28,7 @@ public class AuthController {
      */
     @Operation(summary = "Authenticate a user and return a JWT token")
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.CREATED)
     public TokenResponse login(@RequestBody AuthRequest authRequest) {
         return new TokenResponse(authService.authenticateUser(authRequest));
     }
@@ -38,6 +40,7 @@ public class AuthController {
      */
     @Operation(summary = "Register a new user")
     @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
     public TokenResponse register(@RequestBody @Valid RegisterRequest registerRequest) {
         return new TokenResponse(authService.registerUser(registerRequest));
     }
