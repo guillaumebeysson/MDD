@@ -17,8 +17,13 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 public class CommentController {
 
-    @Autowired
     private CommentService commentService;
+
+
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
+
 
     /**
      * Récupère un commentaire par son identifiant

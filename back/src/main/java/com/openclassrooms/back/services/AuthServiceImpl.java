@@ -7,6 +7,8 @@ import com.openclassrooms.back.exceptions.ConflictException;
 import com.openclassrooms.back.exceptions.UnauthorizedException;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.UserRepository;
+import com.openclassrooms.back.services.interfaces.AuthService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,9 +17,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+@AllArgsConstructor
 @Service
-public class AuthService {
+public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -34,11 +36,8 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /**
-     * Authentifie un utilisateur et retourne un token JWT
-     * @param authRequest requête d'authentification
-     * @return token JWT
-     */
+
+    @Override
     public String authenticateUser(AuthRequest authRequest) {
 
 
@@ -79,11 +78,8 @@ public class AuthService {
             return jwtService.generateToken(userDetails.getUsername());
     }
 
-    /**
-     * Enregistre un nouvel utilisateur
-     * @param registerRequest requête d'enregistrement
-     * @return token JWT
-     */
+
+    @Override
     public String registerUser(RegisterRequest registerRequest) {
 
         if (registerRequest.getEmail() == null || registerRequest.getEmail().isEmpty()){
