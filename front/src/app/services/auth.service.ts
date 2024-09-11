@@ -125,7 +125,6 @@ export class AuthService {
    * Méthode utilisée par le reste de l'application pour vérifier l'état d'authentification
    */
   isAuthenticated(): boolean {
-    console.log('isAuthenticated', this.isAuthenticatedSubject.value);
     return this.isAuthenticatedSubject.value;
   }
 
