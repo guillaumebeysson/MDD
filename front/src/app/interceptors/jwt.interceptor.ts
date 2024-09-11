@@ -34,7 +34,6 @@ const baseUrl = environment.baseUrl;
  */
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const excludedUrls = [`${baseUrl}/auth/login`, `${baseUrl}/auth/register`];
-
   const isExcluded = excludedUrls.some(url => req.url === url);
 
   if (!isExcluded) {
