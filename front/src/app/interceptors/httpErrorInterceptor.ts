@@ -16,8 +16,7 @@ export function errorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
             } else {
                 switch (error.status) {
                     case 401: // Unauthorized
-                        if (!req.url.includes('/auth/login')) {
-                            localStorage.clear();
+                        if (!req.url.includes('/auth/login') && !window.location.pathname.includes('/login')) {
                             window.location.href = '/login';
                         }
                         break;
