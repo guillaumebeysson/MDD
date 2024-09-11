@@ -101,7 +101,7 @@ public class JwtFilter extends OncePerRequestFilter {
         // Récupération du token depuis les cookies
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
-                if ("token".equals(cookie.getName())) { // Assurez-vous que c'est le bon nom du cookie
+                if ("token".equals(cookie.getName())) {
                     jwt = cookie.getValue();
                     break;
                 }

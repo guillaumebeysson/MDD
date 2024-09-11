@@ -147,7 +147,7 @@ public class AuthServiceImpl implements AuthService {
     private void addJwtCookieToResponse(String token, HttpServletResponse response) {
         ResponseCookie jwtCookie = ResponseCookie.from("token", token)
                 .httpOnly(true)
-                .secure(true) // Assurez-vous que l'application utilise HTTPS en production
+                .secure(true)
                 .path("/")
                 .maxAge(24 * 60 * 60) // Durée de vie en secondes (ici, 1 jour)
                 .sameSite("Strict")
@@ -162,16 +162,13 @@ public class AuthServiceImpl implements AuthService {
      * @param response La réponse HTTP pour ajouter le cookie supprimé
      */
     public void logoutAndClearCookie(HttpServletResponse response) {
-        // Créer un cookie "token" avec une durée de vie de 0 pour le supprimer
         ResponseCookie jwtCookie = ResponseCookie.from("token", "")
                 .httpOnly(true)
-                .secure(true) // Assurez-vous d'utiliser HTTPS en production
+                .secure(true)
                 .path("/")
-                .maxAge(0) // Durée de vie 0 pour supprimer le cookie
+                .maxAge(0)
                 .sameSite("Strict")
                 .build();
-
-        // Ajouter le cookie supprimé à la réponse
         response.addHeader("Set-Cookie", jwtCookie.toString());
     }
 
