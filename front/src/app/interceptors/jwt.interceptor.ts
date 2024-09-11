@@ -1,4 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { environment } from '../../environments/environment.development';
 
 
 // /**
@@ -22,16 +23,26 @@ import { HttpInterceptorFn } from '@angular/common/http';
 //   return next(req);
 // };
 
+
+const baseUrl = environment.baseUrl;
+
 /**
- * Intercepteur pour ajouter withCredentials à toutes les requêtes HTTP
+ * Intercepteur pour ajouter withCredentials à toutes les requêtes HTTP sauf certaines (login, register)
  * @param req Requête HTTP
  * @param next Fonction de rappel pour la requête suivante
  * @returns Observable<HttpEvent<unknown>>
  */
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
-  req = req.clone({
-    withCredentials: true,
-  });
+  const excludedUrls = [`${baseUrl}/auth/login`, `${baseUrl}/auth/register`];
+
+  const isExcluded = excludedUrls.some(url => req.url === url);
+
+  if (!isExcluded) {
+    req = req.clone({
+      withCredentials: true,
+    });
+  }
 
   return next(req);
 };
+
