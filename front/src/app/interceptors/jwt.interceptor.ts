@@ -1,6 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+
 
 // /**
 //  * Intercepteur pour ajouter le token JWT aux requêtes HTTP
@@ -30,7 +29,6 @@ import { AuthService } from '../services/auth.service';
  * @returns Observable<HttpEvent<unknown>>
  */
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
-  // Ajouter withCredentials à toutes les requêtes pour envoyer les cookies avec les requêtes
   req = req.clone({
     withCredentials: true,
   });

@@ -60,14 +60,14 @@ export class AuthService {
   register(name: string, email: string, password: string): Observable<AuthResponse> {
     const requestData: RegisterRequest = { name, email, password };
     return this.http.post<AuthResponse>(`${this.baseUrl}auth/register`, requestData, {
-      withCredentials: true, // Permet d'envoyer les cookies avec la requête
+      withCredentials: true,
     }).pipe(
       map((response: AuthResponse) => {
-        this.isAuthenticatedSubject.next(true); // Met à jour l'état d'authentification après une inscription réussie
+        this.isAuthenticatedSubject.next(true);
         return response;
       }),
       catchError((error) => {
-        this.isAuthenticatedSubject.next(false); // Met à jour l'état d'authentification en cas d'erreur
+        this.isAuthenticatedSubject.next(false);
         return throwError(() => error);
       })
     );
@@ -92,10 +92,10 @@ export class AuthService {
    * Déconnecte l'utilisateur
    */
   logout(): void {
-    // Envoie une requête de logout pour supprimer le cookie côté serveur
+
     this.http.post(`${this.baseUrl}auth/logout`, {}, {
       withCredentials: true,
-      responseType: 'text' // Indique à Angular d'attendre une réponse en texte au lieu de JSON
+      responseType: 'text'
     }).subscribe({
       next: () => {
         this.isAuthenticatedSubject.next(false);
@@ -125,6 +125,7 @@ export class AuthService {
    * Méthode utilisée par le reste de l'application pour vérifier l'état d'authentification
    */
   isAuthenticated(): boolean {
+    console.log('isAuthenticated', this.isAuthenticatedSubject.value);
     return this.isAuthenticatedSubject.value;
   }
 

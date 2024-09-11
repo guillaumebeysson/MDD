@@ -8,6 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ArticlesComponent } from '../pages/articles/articles.component';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -20,7 +21,8 @@ import { AuthService } from '../services/auth.service';
     MatListModule,
     MatMenuModule,
     ArticlesComponent,
-    RouterModule
+    RouterModule,
+    AsyncPipe
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
