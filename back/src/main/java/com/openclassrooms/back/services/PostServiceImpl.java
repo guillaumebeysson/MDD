@@ -8,22 +8,25 @@ import com.openclassrooms.back.models.Topic;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.PostRepository;
 import com.openclassrooms.back.repositories.UserRepository;
+import com.openclassrooms.back.services.interfaces.PostService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
-public class PostService {
+public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private TopicService topicService;
+    private TopicServiceImpl topicService;
     @Autowired
     private UserRepository userRepository;
 
@@ -31,6 +34,7 @@ public class PostService {
      * Récupère tous les posts
      * @return la liste des posts
      */
+    @Override
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
@@ -40,6 +44,7 @@ public class PostService {
      * @param id l'id du post
      * @return le post
      */
+    @Override
     public Post getPostById(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Post with id " + id + " not found"));
@@ -51,6 +56,7 @@ public class PostService {
      * @param topicId l'id du topic
      * @return la liste des posts
      */
+    @Override
     public List<Post> getPostsByTopicId(Long topicId) {
         if (!topicService.existsById(topicId)) {
             throw new NotFoundException("Posts with Topic id " + topicId + " not found");
@@ -71,6 +77,7 @@ public class PostService {
      * @param postRequest les informations du post
      * @return le post créé
      */
+    @Override
     public Post createPost(PostRequest postRequest) {
         // Vérification des champs obligatoires
         if (postRequest.getTitle().isEmpty() || postRequest.getContent().isEmpty()) {
@@ -95,6 +102,7 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    @Override
     public List<Post> getPostsByUserSubscriptions(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
@@ -113,6 +121,7 @@ public class PostService {
      * @param post le post à mettre à jour
      * @return le post mis à jour
      */
+    @Override
     public Post updatePost(Post post) {
         if (!postRepository.existsById(post.getId())) {
             throw new NotFoundException("Post with id " + post.getId() + " not found");
@@ -124,6 +133,7 @@ public class PostService {
      * Supprime un post
      * @param id l'id du post
      */
+    @Override
     public void deletePost(Long id) {
         if (!postRepository.existsById(id)) {
             throw new NotFoundException("Post with id " + id + " not found");
@@ -131,6 +141,7 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
+    @Override
     public boolean existsById(Long postId) {
         return postRepository.existsById(postId);
     }

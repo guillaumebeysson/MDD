@@ -3,10 +3,10 @@ package com.openclassrooms.back.controllers;
 import com.openclassrooms.back.dto.PostRequest;
 import com.openclassrooms.back.dto.PostResponse;
 import com.openclassrooms.back.models.User;
-import com.openclassrooms.back.services.PostService;
-import com.openclassrooms.back.services.UserService;
+import com.openclassrooms.back.services.PostServiceImpl;
+import com.openclassrooms.back.services.UserServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +18,14 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 public class PostController {
 
-    @Autowired
-    private PostService postService;
-    @Autowired
-    private UserService userService;
+    private PostServiceImpl postService;
+
+    private UserServiceImpl userService;
+
+    public PostController(PostServiceImpl postService, UserServiceImpl userService) {
+        this.postService = postService;
+        this.userService = userService;
+    }
 
     /**
      * Récupère tous les posts
@@ -70,6 +74,7 @@ public class PostController {
      * @return post créé
      */
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public PostResponse createPost(@RequestBody PostRequest postRequest) {
         return new PostResponse(postService.createPost(postRequest));
     }

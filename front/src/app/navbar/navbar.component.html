@@ -1,11 +1,11 @@
 <mat-toolbar>
-    @if (authService.isAuthenticated()) {
+    @if (isAuthenticated) {
     <img src="/logo-mdd.png" alt="Logo" class="logo" routerLink="/articles">
     } @else {
     <img src="/logo-mdd.png" alt="Logo" class="logo" routerLink="">
     }
     <span class="spacer"></span>
-    @if (authService.isAuthenticated()) {
+    @if (isAuthenticated) {
     <button mat-icon-button matMenuTrigger [matMenuTriggerFor]="menu">
         <mat-icon>menu</mat-icon>
     </button>
@@ -18,7 +18,7 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-    @if (authService.isAuthenticated()) {
+    @if (isAuthenticated) {
     <a mat-menu-item routerLink="/articles">Articles</a>
     <a mat-menu-item routerLink="/topics">Thèmes</a>
     <a mat-menu-item routerLink="/user"><mat-icon>account_circle</mat-icon></a>

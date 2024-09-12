@@ -4,12 +4,11 @@ import com.openclassrooms.back.dto.TopicResponse;
 import com.openclassrooms.back.dto.UpdateUserRequest;
 import com.openclassrooms.back.dto.UserResponse;
 import com.openclassrooms.back.models.User;
-import com.openclassrooms.back.services.UserService;
+import com.openclassrooms.back.services.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +20,11 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
+
+    public UserController(UserServiceImpl userService) {
+        this.userService = userService;
+    }
 
     /**
      * Récupère l'utilisateur actuellement authentifié
@@ -52,6 +54,7 @@ public class UserController {
      * @param topicId l'id du topic
      */
     @PostMapping("/subscribe/{topicId}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void subscribeToTopic(@PathVariable Long topicId) {
         User currentUser = userService.getCurrentUser();
         userService.subscribeToTopic(currentUser.getId(), topicId);

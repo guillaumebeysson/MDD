@@ -3,6 +3,26 @@ import { catchError, Observable, throwError } from "rxjs";
 import { HttpHandlerFn } from '@angular/common/http';
 
 /**
+ * Liste des URL publiques qui ne nécessitent pas d'authentification
+ */
+const PUBLIC_URLS = [
+    '/',
+    '/login',
+    '/register',
+    '/notFound',
+    '/unauthorized'
+];
+
+/**
+ * Vérifie si une URL est publique
+ * @param url L'URL à vérifier
+ * @returns boolean
+ */
+function isPublicUrl(url: string): boolean {
+    return PUBLIC_URLS.some(publicUrl => url.includes(publicUrl));
+}
+
+/**
  * Intercepteur pour les erreurs HTTP
  * @param req Requête HTTP
  * @param next Fonction de rappel pour la requête suivante
@@ -16,8 +36,7 @@ export function errorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
             } else {
                 switch (error.status) {
                     case 401: // Unauthorized
-                        if (!req.url.includes('/auth/login')) {
-                            localStorage.clear();
+                        if (isPublicUrl(req.url) && !window.location.pathname.includes('/login')) {
                             window.location.href = '/login';
                         }
                         break;

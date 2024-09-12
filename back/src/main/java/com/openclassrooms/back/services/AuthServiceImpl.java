@@ -8,8 +8,10 @@ import com.openclassrooms.back.exceptions.UnauthorizedException;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.UserRepository;
 import com.openclassrooms.back.services.interfaces.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,10 +27,10 @@ public class AuthServiceImpl implements AuthService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private CustomUserDetailsServiceImpl customUserDetailsService;
 
     @Autowired
-    private JwtService jwtService;
+    private JwtServiceImpl jwtService;
 
     @Autowired
     private UserRepository userRepository;
@@ -112,6 +114,62 @@ public class AuthServiceImpl implements AuthService {
         authRequest.setEmailOrUsername(registerRequest.getEmail());
         authRequest.setPassword(registerRequest.getPassword());
         return authenticateUser(authRequest);
+    }
+
+    /**
+     * Authentifie l'utilisateur, génère un token JWT et ajoute un cookie HttpOnly dans la réponse.
+     *
+     * @param authRequest La requête d'authentification
+     * @param response    La réponse HTTP pour ajouter le cookie
+     */
+    public void authenticateUserAndSetCookie(AuthRequest authRequest, HttpServletResponse response) {
+        String token = authenticateUser(authRequest);
+        addJwtCookieToResponse(token, response);
+    }
+
+    /**
+     * Enregistre un utilisateur, génère un token JWT et ajoute un cookie HttpOnly dans la réponse.
+     *
+     * @param registerRequest La requête d'enregistrement
+     * @param response        La réponse HTTP pour ajouter le cookie
+     */
+    public void registerUserAndSetCookie(RegisterRequest registerRequest, HttpServletResponse response) {
+        String token = registerUser(registerRequest);
+        addJwtCookieToResponse(token, response);
+    }
+
+    /**
+     * Crée un cookie HttpOnly avec le token JWT et l'ajoute à la réponse.
+     *
+     * @param token    Le token JWT à ajouter dans le cookie
+     * @param response La réponse HTTP pour ajouter le cookie
+     */
+    private void addJwtCookieToResponse(String token, HttpServletResponse response) {
+        ResponseCookie jwtCookie = ResponseCookie.from("token", token)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(24 * 60 * 60) // Durée de vie en secondes (ici, 1 jour)
+                .sameSite("Strict")
+                .build();
+
+        response.addHeader("Set-Cookie", jwtCookie.toString());
+    }
+
+    /**
+     * Déconnecte l'utilisateur en supprimant le cookie JWT.
+     *
+     * @param response La réponse HTTP pour ajouter le cookie supprimé
+     */
+    public void logoutAndClearCookie(HttpServletResponse response) {
+        ResponseCookie jwtCookie = ResponseCookie.from("token", "")
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+        response.addHeader("Set-Cookie", jwtCookie.toString());
     }
 
 }

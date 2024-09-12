@@ -12,17 +12,13 @@ export class TopicService {
 
   private baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   /**
    * Récupère la liste des topics
    */
   getTopics(): Observable<Topic[]> {
-    const token = this.authService.tokenValue;
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.get<Topic[]>(`${this.baseUrl}topics`, { headers });
+    return this.http.get<Topic[]>(`${this.baseUrl}topics`);
   }
 
 }
