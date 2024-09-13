@@ -8,6 +8,8 @@ import com.openclassrooms.back.exceptions.UnauthorizedException;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.UserRepository;
 import com.openclassrooms.back.services.interfaces.AuthService;
+import com.openclassrooms.back.services.interfaces.CustomUserDetailsService;
+import com.openclassrooms.back.services.interfaces.JwtService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,10 @@ public class AuthServiceImpl implements AuthService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private CustomUserDetailsServiceImpl customUserDetailsService;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    private JwtServiceImpl jwtService;
+    private JwtService jwtService;
 
     @Autowired
     private UserRepository userRepository;

@@ -9,6 +9,8 @@ import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.repositories.PostRepository;
 import com.openclassrooms.back.repositories.UserRepository;
 import com.openclassrooms.back.services.interfaces.PostService;
+import com.openclassrooms.back.services.interfaces.TopicService;
+import com.openclassrooms.back.services.interfaces.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +25,10 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
-    private TopicServiceImpl topicService;
+    private TopicService topicService;
     @Autowired
     private UserRepository userRepository;
 

@@ -2,6 +2,7 @@ package com.openclassrooms.back.controllers;
 
 import com.openclassrooms.back.dto.TopicResponse;
 import com.openclassrooms.back.services.TopicServiceImpl;
+import com.openclassrooms.back.services.interfaces.TopicService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +15,9 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 public class TopicController {
 
-    private TopicServiceImpl topicService;
+    private TopicService topicService;
 
-    public TopicController(TopicServiceImpl topicService) {
+    public TopicController(TopicService topicService) {
         this.topicService = topicService;
     }
 

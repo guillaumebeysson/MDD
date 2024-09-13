@@ -6,6 +6,8 @@ import com.openclassrooms.back.models.Comment;
 import com.openclassrooms.back.repositories.CommentRepository;
 
 import com.openclassrooms.back.services.interfaces.CommentService;
+import com.openclassrooms.back.services.interfaces.PostService;
+import com.openclassrooms.back.services.interfaces.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,10 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
-    private PostServiceImpl postService;
+    private PostService postService;
 
     @Override
     public List<Comment> getCommentsByPostId(Long postId) {

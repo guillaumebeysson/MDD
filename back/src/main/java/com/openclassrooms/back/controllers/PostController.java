@@ -5,6 +5,8 @@ import com.openclassrooms.back.dto.PostResponse;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.services.PostServiceImpl;
 import com.openclassrooms.back.services.UserServiceImpl;
+import com.openclassrooms.back.services.interfaces.PostService;
+import com.openclassrooms.back.services.interfaces.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +20,11 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 public class PostController {
 
-    private PostServiceImpl postService;
+    private PostService postService;
 
-    private UserServiceImpl userService;
+    private UserService userService;
 
-    public PostController(PostServiceImpl postService, UserServiceImpl userService) {
+    public PostController(PostService postService, UserService userService) {
         this.postService = postService;
         this.userService = userService;
     }

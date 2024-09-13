@@ -3,6 +3,7 @@ package com.openclassrooms.back.controllers;
 import com.openclassrooms.back.dto.CommentRequest;
 import com.openclassrooms.back.dto.CommentResponse;
 import com.openclassrooms.back.services.CommentServiceImpl;
+import com.openclassrooms.back.services.interfaces.CommentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,9 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 public class CommentController {
 
-    private CommentServiceImpl commentService;
+    private CommentService commentService;
 
-    public CommentController(CommentServiceImpl commentService) {
+    public CommentController(CommentService commentService) {
         this.commentService = commentService;
     }
 

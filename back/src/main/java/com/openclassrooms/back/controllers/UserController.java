@@ -5,6 +5,7 @@ import com.openclassrooms.back.dto.UpdateUserRequest;
 import com.openclassrooms.back.dto.UserResponse;
 import com.openclassrooms.back.models.User;
 import com.openclassrooms.back.services.UserServiceImpl;
+import com.openclassrooms.back.services.interfaces.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -20,9 +21,9 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
-    private UserServiceImpl userService;
+    private UserService userService;
 
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
