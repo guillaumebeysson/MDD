@@ -2,6 +2,7 @@ package com.openclassrooms.back.controllers;
 
 import com.openclassrooms.back.dto.*;
 import com.openclassrooms.back.services.AuthServiceImpl;
+import com.openclassrooms.back.services.interfaces.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
-    private AuthServiceImpl authService;
+    private AuthService authService;
 
-    public AuthController(AuthServiceImpl authService) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
     }
 

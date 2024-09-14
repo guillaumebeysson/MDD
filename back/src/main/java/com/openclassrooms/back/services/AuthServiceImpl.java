@@ -146,7 +146,7 @@ public class AuthServiceImpl implements AuthService {
      * @param token    Le token JWT à ajouter dans le cookie
      * @param response La réponse HTTP pour ajouter le cookie
      */
-    private void addJwtCookieToResponse(String token, HttpServletResponse response) {
+    public void addJwtCookieToResponse(String token, HttpServletResponse response) {
         ResponseCookie jwtCookie = ResponseCookie.from("token", token)
                 .httpOnly(true)
                 .secure(true)
